@@ -17,6 +17,7 @@
 		50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */; };
 		50AF8C5E220A0E2800B1DBC7 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5D220A0E2800B1DBC7 /* Separator.swift */; };
 		50AF8C60220A10C100B1DBC7 /* extensionCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */; };
+		50AF8C62220A163700B1DBC7 /* SplitScreenHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C61220A163700B1DBC7 /* SplitScreenHierarchy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCollectionViewLayout.swift; sourceTree = "<group>"; };
 		50AF8C5D220A0E2800B1DBC7 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionCGRect.swift; sourceTree = "<group>"; };
+		50AF8C61220A163700B1DBC7 /* SplitScreenHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenHierarchy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */,
 				50AF8C58220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift */,
 				50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */,
+				50AF8C61220A163700B1DBC7 /* SplitScreenHierarchy.swift */,
 				50AF8C5D220A0E2800B1DBC7 /* Separator.swift */,
 				50AF8C48220A08A400B1DBC7 /* Main.storyboard */,
 				50AF8C4D220A08A600B1DBC7 /* LaunchScreen.storyboard */,
@@ -158,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50AF8C62220A163700B1DBC7 /* SplitScreenHierarchy.swift in Sources */,
 				50AF8C47220A08A400B1DBC7 /* ViewController.swift in Sources */,
 				50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */,
 				50AF8C59220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift in Sources */,
