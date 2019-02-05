@@ -16,6 +16,7 @@
 		50AF8C59220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C58220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift */; };
 		50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */; };
 		50AF8C5E220A0E2800B1DBC7 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5D220A0E2800B1DBC7 /* Separator.swift */; };
+		50AF8C60220A10C100B1DBC7 /* extensionCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		50AF8C58220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCollectionViewLayout.swift; sourceTree = "<group>"; };
 		50AF8C5D220A0E2800B1DBC7 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionCGRect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				50AF8C46220A08A400B1DBC7 /* ViewController.swift */,
 				50AF8C56220A09D900B1DBC7 /* extensionNSLayoutConstraint.swift */,
+				50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */,
 				50AF8C58220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift */,
 				50AF8C5A220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift */,
 				50AF8C5D220A0E2800B1DBC7 /* Separator.swift */,
@@ -161,6 +164,7 @@
 				50AF8C45220A08A400B1DBC7 /* AppDelegate.swift in Sources */,
 				50AF8C57220A09D900B1DBC7 /* extensionNSLayoutConstraint.swift in Sources */,
 				50AF8C5E220A0E2800B1DBC7 /* Separator.swift in Sources */,
+				50AF8C60220A10C100B1DBC7 /* extensionCGRect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
