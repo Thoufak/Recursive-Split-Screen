@@ -22,11 +22,11 @@ class CollectionViewController: UICollectionViewController {
 // Delegate and dataSource
 extension CollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let colors: [UIColor] = [.green, .cyan]
+        let colors: [UIColor] = [.green, .cyan, .red, .yellow, .blue, .orange]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlainColorCollectionViewCell",
                                                       for: indexPath)
         cell.backgroundColor = colors[indexPath.row]

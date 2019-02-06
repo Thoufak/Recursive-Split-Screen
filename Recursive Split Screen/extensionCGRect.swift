@@ -12,11 +12,11 @@ extension CGRect {
     func divided(by separator: Separator) -> (slice: CGRect, remainder: CGRect) {
         var length: CGFloat!
         
-        switch separator.edgeToOffsetFrom {
-            case .maxXEdge, .minXEdge:
-                length = self.size.width
-            case .maxYEdge, .minYEdge:
-                length = self.size.height
+        switch separator.orientation {
+            case .horizontal:
+                length = size.height
+            case .vertical:
+                length = size.width
         }
         let distance = length * separator.proprotion
         

@@ -15,9 +15,9 @@ enum SeparatorOrientation {
     func getEdgeToOffsetFrom() -> CGRectEdge {
         switch self {
             case .horizontal:
-                return .maxXEdge
-            case .vertical:
                 return .maxYEdge
+            case .vertical:
+                return .maxXEdge
         }
     }
 }

@@ -9,6 +9,5 @@
 import UIKit
 
 protocol SplitScreenTreeNode {
-    var allowedSpace: CGRect { get }
-    func getLayoutAttributes() -> [UICollectionViewLayoutAttributes]
+    mutating func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes]
 }

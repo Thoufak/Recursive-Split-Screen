@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50AF8C45220A08A400B1DBC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C44220A08A400B1DBC7 /* AppDelegate.swift */; };
-		50AF8C47220A08A400B1DBC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C46220A08A400B1DBC7 /* ViewController.swift */; };
+		50AF8C47220A08A400B1DBC7 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C46220A08A400B1DBC7 /* CollectionViewController.swift */; };
 		50AF8C4A220A08A400B1DBC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50AF8C48220A08A400B1DBC7 /* Main.storyboard */; };
 		50AF8C4C220A08A600B1DBC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50AF8C4B220A08A600B1DBC7 /* Assets.xcassets */; };
 		50AF8C4F220A08A600B1DBC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50AF8C4D220A08A600B1DBC7 /* LaunchScreen.storyboard */; };
@@ -25,7 +25,7 @@
 /* Begin PBXFileReference section */
 		50AF8C41220A08A400B1DBC7 /* Recursive Split Screen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recursive Split Screen.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AF8C44220A08A400B1DBC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		50AF8C46220A08A400B1DBC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		50AF8C46220A08A400B1DBC7 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		50AF8C49220A08A400B1DBC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		50AF8C4B220A08A600B1DBC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50AF8C4E220A08A600B1DBC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 		50AF8C43220A08A400B1DBC7 /* Recursive Split Screen */ = {
 			isa = PBXGroup;
 			children = (
-				50AF8C46220A08A400B1DBC7 /* ViewController.swift */,
+				50AF8C46220A08A400B1DBC7 /* CollectionViewController.swift */,
 				50AF8C56220A09D900B1DBC7 /* extensionNSLayoutConstraint.swift */,
 				50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */,
 				50AF8C58220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift */,
@@ -168,7 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50AF8C62220A163700B1DBC7 /* SplitScreenHierarchy.swift in Sources */,
-				50AF8C47220A08A400B1DBC7 /* ViewController.swift in Sources */,
+				50AF8C47220A08A400B1DBC7 /* CollectionViewController.swift in Sources */,
 				50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */,
 				50AF8C59220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift in Sources */,
 				50AF8C45220A08A400B1DBC7 /* AppDelegate.swift in Sources */,

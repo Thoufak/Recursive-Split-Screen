@@ -10,17 +10,32 @@ import UIKit
 
 /// Tree hierarchy
 
-//struct SplitScreenHierarchy {
-//    let size: CGSize
-//    var rootNode: SplitScreenTreeNode
-//    
-//    static func makeTest() -> SplitScreenHierarchy {
-//        let child1 = EndNode()
-//        let child2 = EndNode()
-//        let containerNode = ContainerNode(children: [child1, child2],
-//                                          separator: Separator(proprotion: 0.25,
-//                                                               orientation: .vertical))
-//        return SplitScreenHierarchy(size: UIApplication.shared.windows[0].bounds.size,
-//                                    rootNode:  containerNode)
-//    }
-//}
+struct SplitScreenHierarchy {
+    let size: CGSize
+    var rootNode: SplitScreenTreeNode
+    
+    static func makeTest() -> SplitScreenHierarchy {
+        let child1 = EndNode()
+        let child2 = EndNode()
+        
+        let childContainer = ContainerNode(separator: Separator(proprotion: 0.3,
+                                                                orientation: .horizontal),
+                                           olderNode: child1,
+                                           newerNode: child2)
+        
+        var rootContainerNode = ContainerNode(separator: Separator(proprotion: 0.25,
+                                                                   orientation: .vertical),
+                                              olderNode: child1,
+                                              newerNode: childContainer)
+        
+        //
+        let newEndNode = EndNode()
+        let newSeparator = Separator(proprotion: 0.5, orientation: .vertical)
+        rootContainerNode.olderNode = (rootContainerNode.olderNode as! EndNode)
+            .getContainerContainingSelf(andNewNode: newEndNode, separatedBy: newSeparator)
+        
+        //
+        return SplitScreenHierarchy(size: UIApplication.shared.windows[0].bounds.size,
+                                    rootNode:  rootContainerNode)
+    }
+}

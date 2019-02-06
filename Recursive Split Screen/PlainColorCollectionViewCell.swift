@@ -9,9 +9,9 @@
 import UIKit
 
 class PlainColorCollectionViewCell: UICollectionViewCell {
-    let availableColors: [UIColor] = [.green, .blue, .yellow, .cyan, .red]
-    
-    override func awakeFromNib() {
-        backgroundColor = availableColors.randomElement()!
-    }
+//    let availableColors: [UIColor] = [.blue, .green, .yellow, .cyan, .red]
+//    
+//    override func awakeFromNib() {
+//        backgroundColor = availableColors.randomElement()!
+//    }
 }
