@@ -11,7 +11,7 @@ import UIKit
 class PlainColorCollectionViewCell: UICollectionViewCell {
     let availableColors: [UIColor] = [.green, .blue, .yellow, .cyan, .red]
     
-    func setRandomColor() {
+    override func awakeFromNib() {
         backgroundColor = availableColors.randomElement()!
     }
 }

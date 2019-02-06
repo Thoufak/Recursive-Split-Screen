@@ -8,24 +8,25 @@
 
 import UIKit
 
-struct EndNode: SplitScreenTreeNode {
-    var allowedSpace: CGRect
-    var color: UIColor
-    func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
-        
-    }
-}
-
-struct ContainerNode: SplitScreenTreeNode {
-    var allowedSpace: CGRect
-    var children: [SplitScreenTreeNode]
-    let separator: Separator
-    
-    mutating func addChild(_ node: SplitScreenTreeNode) {
-        children.append(node)
-    }
-    
-    func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
-        return children.flatMap { $0.getLayoutAttributes() }
-    }
-}
+//struct EndNode: SplitScreenTreeNode {
+//    var allowedSpace: CGRect
+//    var color: UIColor
+//    func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
+//
+//        return [UICollectionViewLayoutAttributes]()
+//    }
+//}
+//
+//struct ContainerNode: SplitScreenTreeNode {
+//    var allowedSpace: CGRect
+//    let separator: Separator
+//    // children
+//    var olderNode: SplitScreenTreeNode
+//    var newerNode: SplitScreenTreeNode
+//
+//    func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
+////        olderNode.allowedSpace = getAllowedSpace(asInsetFrom: allowedSpace,
+////                                                 separatedBy: separator)
+//        return [UICollectionViewLayoutAttributes]()
+//    }
+//}

@@ -8,33 +8,30 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: SplitCollectionViewLayout())
-        NSLayoutConstraint.pinEdges(of: collectionView, toEdgesOf: view)
-        collectionView.register(PlainColorCollectionViewCell.self,
-                                forCellWithReuseIdentifier: "PlainColorCollectionViewCell")
-        
-        return collectionView
-    }()
+class CollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        collectionView.register(PlainColorCollectionViewCell.self,
+                                forCellWithReuseIdentifier: "PlainColorCollectionViewCell")
+        collectionView.collectionViewLayout = SplitCollectionViewLayout()
     }
 }
 
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
+// Delegate and dataSource
+extension CollectionViewController {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let colors: [UIColor] = [.green, .cyan]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlainColorCollectionViewCell",
+                                                      for: indexPath)
+        cell.backgroundColor = colors[indexPath.row]
         
+        return cell
     }
 }
 

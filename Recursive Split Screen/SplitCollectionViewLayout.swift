@@ -17,7 +17,8 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
         super.prepare()
         
         layoutAttributesCache.removeAll()
-        calculateLayoutAttributes(for: SplitScreenHierarchy.makeTest())
+//        calculateLayoutAttributes(for: SplitScreenHierarchy.makeTest())
+        calculateTestAttrs()
     }
     
     override var collectionViewContentSize: CGSize {
@@ -25,6 +26,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        print("rect: \(rect)")
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
         for attributes in layoutAttributesCache {
@@ -37,6 +39,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        print("indexPath: \(indexPath)")
         return layoutAttributesCache[indexPath.row]
     }
     
@@ -46,8 +49,25 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     
     // MARK:
     
-    func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
-        let currentNode = hierarchy.rootNode
+//    func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
+////        let currentNode = hierarchy.rootNode
+//
+//    }
+    
+    func calculateTestAttrs() {
+        var attrs = [UICollectionViewLayoutAttributes]()
+        for row in 0...1 {
+            attrs.append(UICollectionViewLayoutAttributes.init(forCellWith: IndexPath(row: row, section: 0)))
+        }
         
+        attrs[0].frame = CGRect(x: 0,
+                                y: 0,
+                                width: collectionViewContentSize.width * 0.3,
+                                height: collectionViewContentSize.height)
+        attrs[1].frame = CGRect(x: collectionViewContentSize.width * 0.3,
+                                y: 0,
+                                width: collectionViewContentSize.width * 0.7,
+                                height: collectionViewContentSize.height)
+        layoutAttributesCache.append(contentsOf: attrs)
     }
 }
