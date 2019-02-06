@@ -17,7 +17,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
         super.prepare()
         
         layoutAttributesCache.removeAll()
-        calculateLayoutAttributes(for: )
+        calculateLayoutAttributes(for: SplitScreenHierarchy.makeTest())
     }
     
     override var collectionViewContentSize: CGSize {
@@ -47,6 +47,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     // MARK:
     
     func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
+        let currentNode = hierarchy.rootNode
         
     }
 }
