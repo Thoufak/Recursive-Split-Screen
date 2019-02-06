@@ -11,31 +11,47 @@ import UIKit
 /// Tree hierarchy
 
 struct SplitScreenHierarchy {
-    let size: CGSize
+    let initialSpace: CGRect
     var rootNode: SplitScreenTreeNode
     
     static func makeTest() -> SplitScreenHierarchy {
-        let child1 = EndNode()
-        let child2 = EndNode()
-        
-        let childContainer = ContainerNode(separator: Separator(proprotion: 0.3,
-                                                                orientation: .horizontal),
-                                           olderNode: child1,
-                                           newerNode: child2)
-        
-        var rootContainerNode = ContainerNode(separator: Separator(proprotion: 0.25,
-                                                                   orientation: .vertical),
-                                              olderNode: child1,
-                                              newerNode: childContainer)
-        
-        //
-        let newEndNode = EndNode()
         let newSeparator = Separator(proprotion: 0.5, orientation: .vertical)
-        rootContainerNode.olderNode = (rootContainerNode.olderNode as! EndNode)
-            .getContainerContainingSelf(andNewNode: newEndNode, separatedBy: newSeparator)
+        let childContainer1 = ContainerNode(separator: Separator(proprotion: 0.3,
+                                                                orientation: .horizontal),
+                                           olderNode: EndNode(),
+                                           newerNode: EndNode()
+                                            .getContainerContainingSelf(andNewNode: EndNode(),
+                                                                        separatedBy: newSeparator))
         
-        //
-        return SplitScreenHierarchy(size: UIApplication.shared.windows[0].bounds.size,
-                                    rootNode:  rootContainerNode)
+        var childContainer2 = childContainer1
+        childContainer2.separator.proprotion = 0.2
+        
+        let rootContainerNode = ContainerNode(separator: Separator(proprotion: 0.75,
+                                                                   orientation: .vertical),
+                                              olderNode: childContainer1,
+                                              newerNode: childContainer2)
+        
+        return SplitScreenHierarchy(initialSpace: UIApplication.shared.windows[0].frame,
+                                    rootNode: rootContainerNode)
+    }
+    
+    static func makeSecondTest() -> SplitScreenHierarchy {
+        let root = ContainerNode(separator: Separator(proprotion: 0.5,
+                                                      orientation: .vertical),
+                                 olderNode: EndNode(),
+                                 newerNode: EndNode()
+                                    .getContainerContainingSelf(andNewNode: EndNode()
+                                        .getContainerContainingSelf(andNewNode: EndNode()
+                                            .getContainerContainingSelf(andNewNode: EndNode(),
+                                                                        separatedBy: Separator(proprotion: 0.1,
+                                                                                               orientation: .vertical)),
+                                                                    separatedBy: Separator(proprotion: 0.5,
+                                                                                           orientation: .horizontal)),
+                                                                separatedBy: Separator(proprotion: 0.9,
+                                                                                       orientation: .horizontal))
+                                 )
+
+        return SplitScreenHierarchy(initialSpace: UIApplication.shared.windows[0].frame,
+                                    rootNode: root)
     }
 }

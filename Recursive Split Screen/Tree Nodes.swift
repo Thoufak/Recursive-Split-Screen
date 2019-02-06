@@ -28,7 +28,7 @@ struct EndNode: SplitScreenTreeNode {
 }
 
 struct ContainerNode: SplitScreenTreeNode {
-    let separator: Separator
+    var separator: Separator
     // children
     var olderNode: SplitScreenTreeNode
     var newerNode: SplitScreenTreeNode
@@ -36,8 +36,8 @@ struct ContainerNode: SplitScreenTreeNode {
     mutating func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
         let divided = allowedSpace.divided(by: separator)
 
-        return [olderNode.getLayoutAttributes(withAllowedSpace: divided.slice),
-                newerNode.getLayoutAttributes(withAllowedSpace: divided.remainder)]
+        return [olderNode.getLayoutAttributes(withAllowedSpace: divided.remainder),
+                newerNode.getLayoutAttributes(withAllowedSpace: divided.slice)]
             .flatMap { $0 }
     }
 }

@@ -13,12 +13,13 @@ import UIKit
 class SplitCollectionViewLayout: UICollectionViewLayout {
     var layoutAttributesCache = [UICollectionViewLayoutAttributes]()
     
+    // MARK: Overrides
+    
     override func prepare() {
         super.prepare()
         
         layoutAttributesCache.removeAll()
-//        calculateLayoutAttributes(for: SplitScreenHierarchy.makeTest())
-        calculateTestAttrs(for: SplitScreenHierarchy.makeTest())
+        calculateLayoutAttributes(for: SplitScreenHierarchy.makeSecondTest())
     }
     
     override var collectionViewContentSize: CGSize {
@@ -48,28 +49,10 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     
     // MARK:
     
-//    func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
-////        let currentNode = hierarchy.rootNode
-//
-//    }
-    
-    func calculateTestAttrs(for hierarchy: SplitScreenHierarchy) {
-//        var attrs = [UICollectionViewLayoutAttributes]()
-//        for row in 0...1 {
-//            attrs.append(UICollectionViewLayoutAttributes.init(forCellWith: IndexPath(row: row, section: 0)))
-//        }
-//
-//        attrs[0].frame = CGRect(x: 0,
-//                                y: 0,
-//                                width: collectionViewContentSize.width * 0.3,
-//                                height: collectionViewContentSize.height)
-//        attrs[1].frame = CGRect(x: collectionViewContentSize.width * 0.3,
-//                                y: 0,
-//                                width: collectionViewContentSize.width * 0.7,
-//                                height: collectionViewContentSize.height)
-//        layoutAttributesCache.append(contentsOf: attrs)
+    func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
         var copy = hierarchy
         
-        layoutAttributesCache = copy.rootNode.getLayoutAttributes(withAllowedSpace: UIApplication.shared.windows[0].frame)
+        layoutAttributesCache = copy.rootNode
+            .getLayoutAttributes(withAllowedSpace: hierarchy.initialSpace)
     }
 }

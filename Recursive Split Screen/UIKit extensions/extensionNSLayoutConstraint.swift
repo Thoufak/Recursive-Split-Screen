@@ -18,4 +18,12 @@ extension NSLayoutConstraint {
             firstView.bottomAnchor.constraint(equalTo: secondView.bottomAnchor)
         ])
     }
+    
+    static func center(_ viewToBeCentered: UIView, in parentView: UIView) {
+        viewToBeCentered.translatesAutoresizingMaskIntoConstraints = false
+        self.activate([
+            viewToBeCentered.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
+            viewToBeCentered.centerYAnchor.constraint(equalTo: parentView.centerYAnchor)
+        ])
+    }
 }

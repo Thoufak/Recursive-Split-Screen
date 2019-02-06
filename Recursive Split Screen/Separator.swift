@@ -24,7 +24,7 @@ enum SeparatorOrientation {
 
 struct Separator {
     // 0...1
-    let proprotion: CGFloat
+    var proprotion: CGFloat
     let orientation: SeparatorOrientation
     var edgeToOffsetFrom: CGRectEdge { return orientation.getEdgeToOffsetFrom() }
 }
