@@ -23,10 +23,10 @@ enum SeparatorOrientation {
 }
 
 class Separator {
-    // 0...1
+    /// 0...1
+    /// Indicates the primaryView's proportion (the secondaryView takes the rest of space)
     var proportion: CGFloat
     let orientation: SeparatorOrientation
-    var edgeToOffsetFrom: CGRectEdge { return orientation.getEdgeToOffsetFrom() }
     
     func setProportion(_ newProprotion: CGFloat) {
         proportion = newProprotion

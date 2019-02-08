@@ -9,9 +9,20 @@
 import UIKit
 
 class PlainColorCollectionViewCell: UICollectionViewCell {
-//    let availableColors: [UIColor] = [.blue, .green, .yellow, .cyan, .red]
-//    
-//    override func awakeFromNib() {
-//        backgroundColor = availableColors.randomElement()!
-//    }
+    var indexPath: IndexPath!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
+        print(gestureRecognizer.translation(in: self))
+        print(indexPath.row)
+    }
 }
