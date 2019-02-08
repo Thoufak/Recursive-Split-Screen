@@ -16,16 +16,26 @@ class CollectionViewController: UICollectionViewController {
         collectionView.register(PlainColorCollectionViewCell.self,
                                 forCellWithReuseIdentifier: "PlainColorCollectionViewCell")
         collectionView.collectionViewLayout = SplitCollectionViewLayout()
+        
+        collectionView.register(SeparatorView.self,
+                                forSupplementaryViewOfKind: "Separator",
+                                withReuseIdentifier: "Separator")
     }
 }
 
 // Delegate and dataSource
 extension CollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        // FIXME:
+//        let num = (collectionView.collectionViewLayout as! SplitCollectionViewLayout).splitScreenHierarchy.getNumberOfAllElements()
+        let num = SplitScreenHierarchy.makeSecondTest().getNumberOfAllElements()
+        print(num)
+        return num
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        assert(indexPath.row % 2 == 0)
+        
         let colors: [UIColor] = [
             #colorLiteral(red: 0.2466010237, green: 0.7337603109, blue: 0.09794580111, alpha: 1),
             #colorLiteral(red: 0.2063746569, green: 0.5824351285, blue: 0.8851179679, alpha: 1),
@@ -36,7 +46,7 @@ extension CollectionViewController {
         ]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlainColorCollectionViewCell",
                                                       for: indexPath)
-        cell.backgroundColor = colors[indexPath.row]
+        cell.backgroundColor = colors[indexPath.row / 2]
         
         let label = UILabel()
         label.text = "\(indexPath.row)"
@@ -45,6 +55,17 @@ extension CollectionViewController {
         NSLayoutConstraint.center(label, in: cell.contentView)
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
+                                                                   withReuseIdentifier: "Separator",
+                                                                   for: indexPath)
+        view.backgroundColor = .white
+        
+        return view
     }
 }
 

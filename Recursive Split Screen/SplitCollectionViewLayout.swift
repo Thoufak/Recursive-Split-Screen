@@ -12,14 +12,23 @@ import UIKit
 
 class SplitCollectionViewLayout: UICollectionViewLayout {
     var layoutAttributesCache = [UICollectionViewLayoutAttributes]()
+    var splitScreenHierarchy = SplitScreenHierarchy.makeSecondTest()
+//    var splitScreenHierarchy: SplitScreenHierarchy
+    
+//    override init(initialScreenHierarchy: SplitScreenHierarchy = SplitScreenHierarchy.makeOneScreen()) {
+//        super.init()
+//        splitScreenHierarchy = initialScreenHierarchy
+//    }
     
     // MARK: Overrides
     
     override func prepare() {
         super.prepare()
         
+        print("prepare called")
+        
         layoutAttributesCache.removeAll()
-        calculateLayoutAttributes(for: SplitScreenHierarchy.makeSecondTest())
+        calculateLayoutAttributes()
     }
     
     override var collectionViewContentSize: CGSize {
@@ -27,6 +36,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        print("in rect: \(rect)")
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
         for attributes in layoutAttributesCache {
@@ -44,15 +54,22 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return false
+        return true
+//        return collectionView?.bounds.size != newBounds.size
+    }
+    
+    override func invalidateLayout() {
+        super.invalidateLayout()
+        
+        print("inv")
     }
     
     // MARK:
     
-    func calculateLayoutAttributes(for hierarchy: SplitScreenHierarchy) {
-        var copy = hierarchy
+    func calculateLayoutAttributes() {
+        var copy = splitScreenHierarchy
         
         layoutAttributesCache = copy.rootNode
-            .getLayoutAttributes(withAllowedSpace: hierarchy.initialSpace)
+            .getLayoutAttributes(withAllowedSpace: splitScreenHierarchy.initialSpace)
     }
 }

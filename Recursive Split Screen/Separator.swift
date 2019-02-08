@@ -22,9 +22,18 @@ enum SeparatorOrientation {
     }
 }
 
-struct Separator {
+class Separator {
     // 0...1
-    var proprotion: CGFloat
+    var proportion: CGFloat
     let orientation: SeparatorOrientation
     var edgeToOffsetFrom: CGRectEdge { return orientation.getEdgeToOffsetFrom() }
+    
+    func setProportion(_ newProprotion: CGFloat) {
+        proportion = newProprotion
+    }
+    
+    init(proportion: CGFloat, orientation: SeparatorOrientation) {
+        self.proportion = proportion
+        self.orientation = orientation
+    }
 }

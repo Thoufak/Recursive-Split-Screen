@@ -18,7 +18,7 @@ extension CGRect {
             case .vertical:
                 length = size.width
         }
-        let distance = length * separator.proprotion
+        let distance = length * separator.proportion
         
         return self.divided(atDistance: distance,
                             from: separator.edgeToOffsetFrom)

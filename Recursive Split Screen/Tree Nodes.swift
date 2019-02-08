@@ -9,8 +9,6 @@
 import UIKit
 
 struct EndNode: SplitScreenTreeNode {
-    var color: UIColor!
-    
     func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
         // FIXME: pass correct inxedPath
         let attributes = UICollectionViewLayoutAttributes(forCellWith: IndexPathIterator.shared.next())
@@ -25,20 +23,51 @@ struct EndNode: SplitScreenTreeNode {
                              olderNode: self,
                              newerNode: newNode)
     }
+    
+    func getNumberOfChildrenScreens() -> Int {
+        return 0
+    }
 }
 
 struct ContainerNode: SplitScreenTreeNode {
     var separator: Separator
-    // children
     var olderNode: SplitScreenTreeNode
     var newerNode: SplitScreenTreeNode
 
     mutating func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
         let divided = allowedSpace.divided(by: separator)
-
-        return [olderNode.getLayoutAttributes(withAllowedSpace: divided.remainder),
-                newerNode.getLayoutAttributes(withAllowedSpace: divided.slice)]
-            .flatMap { $0 }
+        
+        let attr1 = olderNode.getLayoutAttributes(withAllowedSpace: divided.remainder)
+        
+        let sepWidth: CGFloat = 8.0
+        let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
+                                                        with: IndexPathIterator.shared.next())
+        switch separator.orientation {
+            case .horizontal:
+                sepAttrs.frame = CGRect(x: allowedSpace.minX,
+                                        y: divided.slice.minY,
+                                        width: allowedSpace.width,
+                                        height: sepWidth)
+            
+            case .vertical:
+                sepAttrs.frame = CGRect(x: divided.slice.minX,
+                                        y: allowedSpace.minY,
+                                        width: sepWidth,
+                                        height: allowedSpace.height)
+        }
+        sepAttrs.alpha = 0.3
+        
+        
+        let attr2 = newerNode.getLayoutAttributes(withAllowedSpace: divided.slice)
+        
+        var fullAttrs = [attr1, attr2].flatMap { $0 }
+        fullAttrs.append(sepAttrs)
+        
+        return fullAttrs
+    }
+    
+    func getNumberOfChildrenScreens() -> Int {
+        return 2 + olderNode.getNumberOfChildrenScreens() + newerNode.getNumberOfChildrenScreens()
     }
 }
 

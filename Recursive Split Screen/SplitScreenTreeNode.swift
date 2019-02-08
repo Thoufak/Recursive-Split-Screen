@@ -10,4 +10,5 @@ import UIKit
 
 protocol SplitScreenTreeNode {
     mutating func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes]
+    func getNumberOfChildrenScreens() -> Int
 }
