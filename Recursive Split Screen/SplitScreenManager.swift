@@ -1,5 +1,5 @@
 //
-//  SplitScreenHierarchy.swift
+//  SplitScreenManager.swift
 //  Recursive Split Screen
 //
 //  Created by Valeriy on 05/02/2019.
