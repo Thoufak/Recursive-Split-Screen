@@ -19,8 +19,6 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
         
-        print("prepare called")
-        
         layoutAttributesCache.removeAll()
         calculateLayoutAttributes()
     }
@@ -30,7 +28,6 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        print("in rect: \(rect)")
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
         for attributes in layoutAttributesCache {
@@ -43,19 +40,12 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("indexPath: \(indexPath)")
         return layoutAttributesCache[indexPath.row]
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
 //        return collectionView?.bounds.size != newBounds.size
-    }
-    
-    override func invalidateLayout() {
-        super.invalidateLayout()
-        
-        print("inv")
     }
     
     // MARK:

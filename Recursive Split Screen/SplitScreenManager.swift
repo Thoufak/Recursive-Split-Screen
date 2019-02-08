@@ -25,6 +25,7 @@ class SplitScreenManager: NSObject {
         super.init()
         
         self.rootNode.indexPathProvider = self
+        self.rootNode.indexPath = getNewIndexPath(forSection: 0)
     }
     
     func getNumberOfAllElements() -> Int {
@@ -39,7 +40,7 @@ class SplitScreenManager: NSObject {
     
     func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
         var attrs = rootNode.getLayoutAttributes(withAllowedSpace: initialSpace)
-        print(attrs.map { $0.indexPath })
+//        print(attrs.map { $0.indexPath })
         return attrs
     }
     
@@ -51,7 +52,7 @@ class SplitScreenManager: NSObject {
             let currentNode = queue.first!
             queue = Array(queue.dropFirst())
             
-            if currentNode.cellIndexPath == indexPath {
+            if currentNode.indexPath == indexPath {
                 return currentNode
             }
             
@@ -85,7 +86,6 @@ class SplitScreenManager: NSObject {
 
 extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("allNum: \(getNumberOfAllElements())")
         return getNumberOfAllElements()
     }
     

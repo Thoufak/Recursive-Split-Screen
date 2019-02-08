@@ -15,8 +15,7 @@ class SplitScreenTreeNodeNew {
     
     var separator: Separator?
     var indexPathProvider: IndexPathProvider!
-    var cellIndexPath: IndexPath?
-    var separatorIndexPath: IndexPath?
+    var indexPath: IndexPath!
     
     var isRootNode: Bool { return parent == nil }
     var isContainerNode: Bool { return separator != nil }
@@ -37,8 +36,7 @@ class SplitScreenTreeNodeNew {
             attributes.append(getSeparatorAttributes(withAllowedSpace: allowedSpace))
             attributes.append(contentsOf: secondaryChild.getLayoutAttributes(withAllowedSpace: divided.slice))
         } else {
-            cellIndexPath = cellIndexPath ?? indexPathProvider.getNewIndexPath(forSection: 0)
-            let endScreenAttributes = UICollectionViewLayoutAttributes(forCellWith: cellIndexPath!)
+            let endScreenAttributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             endScreenAttributes.frame = allowedSpace
             attributes.append(endScreenAttributes)
         }
@@ -52,10 +50,8 @@ class SplitScreenTreeNodeNew {
         let divided = allowedSpace.divided(by: separator)
         let sepWidth: CGFloat = 8.0
         
-        separatorIndexPath = separatorIndexPath ?? indexPathProvider.getNewIndexPath(forSection: 0)
-        
         let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
-                                                        with: separatorIndexPath!)
+                                                        with: indexPath)
         switch separator.orientation {
             case .horizontal:
                 sepAttrs.frame = CGRect(x: allowedSpace.minX,
@@ -79,13 +75,13 @@ class SplitScreenTreeNodeNew {
         
         primaryChild = SplitScreenTreeNodeNew()
         primaryChild!.indexPathProvider = indexPathProvider
-        primaryChild!.cellIndexPath = cellIndexPath
+        primaryChild!.indexPath = indexPath
         
-        self.separatorIndexPath = indexPathProvider.getNewIndexPath(forSection: 0)
+        self.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
         
         secondaryChild = SplitScreenTreeNodeNew()
         secondaryChild!.indexPathProvider = indexPathProvider
-        secondaryChild!.separatorIndexPath = indexPathProvider.getNewIndexPath(forSection: 0)
+        secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
         
         return secondaryChild!
     }

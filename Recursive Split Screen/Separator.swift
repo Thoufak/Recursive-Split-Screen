@@ -20,6 +20,12 @@ enum SeparatorOrientation {
                 return .maxXEdge
         }
     }
+    
+    static func getRandomOrientation() -> SeparatorOrientation {
+        let options: [SeparatorOrientation] = [.horizontal, .vertical]
+        
+        return options.randomElement()!
+    }
 }
 
 class Separator {
