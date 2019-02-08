@@ -14,6 +14,7 @@ class CollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         let mainSplitScreenHierarchy = SplitScreenManager.makeSecondTest()
+        mainSplitScreenHierarchy.collectionViewDif = collectionView
         
         collectionView.collectionViewLayout = SplitCollectionViewLayout()
         (collectionView.collectionViewLayout as! SplitCollectionViewLayout).splitScreenHierarchy = mainSplitScreenHierarchy

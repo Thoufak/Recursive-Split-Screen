@@ -10,19 +10,22 @@ import UIKit
 
 class PlainColorCollectionViewCell: UICollectionViewCell {
     var indexPath: IndexPath!
+    var viewSplitter: ViewSplitter!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
-        print(gestureRecognizer.translation(in: self))
-        print(indexPath.row)
+    @objc func didTap(gestureRecognizer: UITapGestureRecognizer) {
+        print("Split \(indexPath.row)")
+        viewSplitter.splitView(atIndexPath: indexPath,
+                               withSeparator: Separator(proportion: 0.5,
+                                                        orientation: .vertical))
     }
 }
