@@ -12,13 +12,7 @@ import UIKit
 
 class SplitCollectionViewLayout: UICollectionViewLayout {
     var layoutAttributesCache = [UICollectionViewLayoutAttributes]()
-    var splitScreenHierarchy = SplitScreenHierarchy.makeSecondTest()
-//    var splitScreenHierarchy: SplitScreenHierarchy
-    
-//    override init(initialScreenHierarchy: SplitScreenHierarchy = SplitScreenHierarchy.makeOneScreen()) {
-//        super.init()
-//        splitScreenHierarchy = initialScreenHierarchy
-//    }
+    var splitScreenHierarchy: SplitScreenManager!
     
     // MARK: Overrides
     
@@ -67,9 +61,6 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     // MARK:
     
     func calculateLayoutAttributes() {
-        var copy = splitScreenHierarchy
-        
-        layoutAttributesCache = copy.rootNode
-            .getLayoutAttributes(withAllowedSpace: splitScreenHierarchy.initialSpace)
+        layoutAttributesCache = splitScreenHierarchy.getLayoutAttributes()
     }
 }

@@ -2,38 +2,17 @@
 //  File.swift
 //  Recursive Split Screen
 //
-//  Created by Valeriy on 05/02/2019.
+//  Created by Valeriy on 08/02/2019.
 //  Copyright © 2019 Valeriy. All rights reserved.
 //
 
 import UIKit
 
-struct EndNode: SplitScreenTreeNode {
-    func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
-        // FIXME: pass correct inxedPath
-        let attributes = UICollectionViewLayoutAttributes(forCellWith: IndexPathIterator.shared.next())
-        attributes.frame = allowedSpace
-        
-        return [attributes]
-    }
-    
-    func getContainerContainingSelf(andNewNode newNode: SplitScreenTreeNode,
-                                    separatedBy separator: Separator) -> ContainerNode {
-        return ContainerNode(separator: separator,
-                             olderNode: self,
-                             newerNode: newNode)
-    }
-    
-    func getNumberOfChildrenScreens() -> Int {
-        return 0
-    }
-}
-
 struct ContainerNode: SplitScreenTreeNode {
     var separator: Separator
     var olderNode: SplitScreenTreeNode
     var newerNode: SplitScreenTreeNode
-
+    
     mutating func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
         let divided = allowedSpace.divided(by: separator)
         
@@ -43,17 +22,17 @@ struct ContainerNode: SplitScreenTreeNode {
         let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
                                                         with: IndexPathIterator.shared.next())
         switch separator.orientation {
-            case .horizontal:
-                sepAttrs.frame = CGRect(x: allowedSpace.minX,
-                                        y: divided.slice.minY,
-                                        width: allowedSpace.width,
-                                        height: sepWidth)
+        case .horizontal:
+            sepAttrs.frame = CGRect(x: allowedSpace.minX,
+                                    y: divided.slice.minY,
+                                    width: allowedSpace.width,
+                                    height: sepWidth)
             
-            case .vertical:
-                sepAttrs.frame = CGRect(x: divided.slice.minX,
-                                        y: allowedSpace.minY,
-                                        width: sepWidth,
-                                        height: allowedSpace.height)
+        case .vertical:
+            sepAttrs.frame = CGRect(x: divided.slice.minX,
+                                    y: allowedSpace.minY,
+                                    width: sepWidth,
+                                    height: allowedSpace.height)
         }
         sepAttrs.alpha = 0.3
         
