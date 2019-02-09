@@ -67,6 +67,15 @@ class SplitScreenManager: NSObject {
     
     //MARK: Make methods
 
+    static func makeOneScreen() -> SplitScreenManager {
+        let root = SplitScreenTreeNodeNew()
+        let newManager = SplitScreenManager(initialSpace: UIApplication.shared.windows[0].frame,
+                                            rootNode: root)
+        newManager.rootNode.indexPathProvider = newManager
+        
+        return newManager
+    }
+    
     static func makeSecondTest() -> SplitScreenManager {
         let root = SplitScreenTreeNodeNew()
         let newManager = SplitScreenManager(initialSpace: UIApplication.shared.windows[0].frame,
@@ -90,41 +99,44 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        assert(indexPath.row % 2 == 0)
         
-//        let colors: [UIColor] = [
-//            #colorLiteral(red: 0.2466010237, green: 0.7337603109, blue: 0.09794580111, alpha: 1),
-//            #colorLiteral(red: 0.2063746569, green: 0.5824351285, blue: 0.8851179679, alpha: 1),
-//            #colorLiteral(red: 0.8572533312, green: 0.2916841071, blue: 0.253220252, alpha: 1),
-//            #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1),
-//            #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1),
-//            #colorLiteral(red: 0.443669592, green: 0.8423986483, blue: 0.8831705729, alpha: 1),
-//        ]
+        let colors: [UIColor] = [
+            #colorLiteral(red: 0.2466010237, green: 0.7337603109, blue: 0.09794580111, alpha: 1),
+            #colorLiteral(red: 0.2063746569, green: 0.5824351285, blue: 0.8851179679, alpha: 1),
+            #colorLiteral(red: 0.8572533312, green: 0.2916841071, blue: 0.253220252, alpha: 1),
+            #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1),
+            #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1),
+            #colorLiteral(red: 0.443669592, green: 0.8423986483, blue: 0.8831705729, alpha: 1),
+        ]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlainColorCollectionViewCell",
                                                       for: indexPath)
-//        cell.backgroundColor = colors[indexPath.row / 2]
-        cell.backgroundColor = UIColor(red: CGFloat.random(in: 0...1),
-                                       green: CGFloat.random(in: 0...1),
-                                       blue: CGFloat.random(in: 0...1),
-                                       alpha: 1)
+        cell.backgroundColor = colors[indexPath.row / 2 % colors.count]
+//        cell.backgroundColor = UIColor(red: CGFloat.random(in: 0...1),
+//                                       green: CGFloat.random(in: 0...1),
+//                                       blue: CGFloat.random(in: 0...1),
+//                                       alpha: 1)
         (cell as! PlainColorCollectionViewCell).indexPath = indexPath
         (cell as! PlainColorCollectionViewCell).viewSplitter = self
         
-        let label = UILabel()
-        label.text = "\(indexPath.row)"
-        label.textColor = .white
-        cell.contentView.addSubview(label)
-        NSLayoutConstraint.center(label, in: cell.contentView)
+//        let label = UILabel()
+//        label.text = "\(indexPath.row)"
+//        label.textColor = .white
+//        cell.contentView.addSubview(label)
+//        NSLayoutConstraint.center(label, in: cell.contentView)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath) -> UICollectionReusableView {
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
                                                                    withReuseIdentifier: "Separator",
                                                                    for: indexPath)
         view.backgroundColor = .white
+        (view as! SeparatorView).separator = getSplitScreenTreeNode(atIndexPath: indexPath)!.separator!
+        (view as! SeparatorView).layoutUpdater = self
         
         return view
     }
@@ -144,6 +156,16 @@ protocol ViewSplitter {
 extension SplitScreenManager: ViewSplitter {
     func splitView(atIndexPath indexPath: IndexPath, withSeparator separator: Separator) {
         getSplitScreenTreeNode(atIndexPath: indexPath)!.split(bySeparator: separator)
+        collectionViewDif.reloadData()
+    }
+}
+
+protocol LayoutUpdater {
+    func reloadData()
+}
+
+extension SplitScreenManager: LayoutUpdater {
+    func reloadData() {
         collectionViewDif.reloadData()
     }
 }

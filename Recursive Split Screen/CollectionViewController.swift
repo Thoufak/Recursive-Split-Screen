@@ -13,7 +13,7 @@ class CollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mainSplitScreenHierarchy = SplitScreenManager.makeSecondTest()
+        let mainSplitScreenHierarchy = SplitScreenManager.makeOneScreen()
         mainSplitScreenHierarchy.collectionViewDif = collectionView
         
         collectionView.collectionViewLayout = SplitCollectionViewLayout()
