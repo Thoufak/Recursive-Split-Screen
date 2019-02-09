@@ -43,18 +43,15 @@ class Separator {
     var proportion: CGFloat
     let orientation: SeparatorOrientation
     var thickness: CGFloat
-    var parentSize: CGRect
     
     static let standardThickness: CGFloat = 16.0
     
     init(proportion: CGFloat,
          orientation: SeparatorOrientation,
-         parentSize: CGRect
          thickness: CGFloat = Separator.standardThickness) {
         self.proportion = proportion
         self.orientation = orientation
         self.thickness = thickness
-        self.parentSize = parentSize
     }
     
     func getFrame(forSuperViewFrame superViewFrame: CGRect) -> CGRect {
@@ -75,15 +72,15 @@ class Separator {
     }
     
     func getProportion(forTouchLocation touchLocation: CGPoint,
-                       withSuperViewSize superViewSize: CGSize) -> CGFloat {
+                       inSuperView superView: UIView) -> CGFloat {
 //        let distance = orientation == .horizontal ?
 //            superView.frame.maxX - touchLocation.x :
 //            superView.frame.maxY - touchLocation.y
 //        let divided = superView.frame.divided(atDistance: distance,
 //                                              from: orientation.getEdgeToOffsetFrom())
         let proportion = orientation == .vertical ?
-            touchLocation.x / superViewSize.width :
-            touchLocation.y / superViewSize.height
+            touchLocation.x / superView.bounds.width :
+            touchLocation.y / superView.bounds.height
         
         return proportion
     }

@@ -47,25 +47,10 @@ class SplitScreenTreeNodeNew {
     private func getSeparatorAttributes(withAllowedSpace allowedSpace: CGRect) -> UICollectionViewLayoutAttributes {
         // FIXME:
         guard let separator = separator else { fatalError() }
-        let divided = allowedSpace.divided(by: separator)
         
         let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
                                                         with: indexPath)
         sepAttrs.frame = separator.getFrame(forSuperViewFrame: allowedSpace)
-        
-//        switch separator.orientation {
-//            case .horizontal:
-//                sepAttrs.frame = CGRect(x: allowedSpace.minX,
-//                                        y: divided.slice.minY,
-//                                        width: allowedSpace.width,
-//                                        height: separator.thickness)
-//
-//            case .vertical:
-//                sepAttrs.frame = CGRect(x: divided.slice.minX,
-//                                        y: allowedSpace.minY,
-//                                        width: separator.thickness,
-//                                        height: allowedSpace.height)
-//        }
         
         return sepAttrs
     }

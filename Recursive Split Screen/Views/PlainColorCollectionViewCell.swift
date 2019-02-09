@@ -11,7 +11,11 @@ import UIKit
 class PlainColorCollectionViewCell: UICollectionViewCell {
     var indexPath: IndexPath!
     var viewSplitter: ViewSplitter!
-    var editingSeparator: Separator?
+    var editingSeparator: Separator? {
+        didSet {
+//            print("EditingSeparator is nil? Answer: \(editingSeparator == nil)")
+        }
+    }
     var startPoint: CGPoint?
     var sepView: UIView?
     var isEditing = false
@@ -33,29 +37,25 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
-        var proportion: CGFloat = 0
-        
-//        switch editingSeparator!.orientation {
-//            case .horizontal:
-//                proportion = ((startPoint?.y ?? 0) + gestureRecognizer.translation(in: contentView).y) / contentView.bounds.height
-//            case .vertical:
-//                proportion = ((startPoint?.x ?? 0) + gestureRecognizer.translation(in: contentView).x) / contentView.bounds.width
-//        }
+        guard isEditing else { print("here") ; return }
         
         switch gestureRecognizer.state {
             case .began, .changed:
-                proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
+                print("Pan began/changed")
+                let proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
                                                              inSuperView: contentView)
                 editingSeparator?.proportion = proportion
                 sepView?.frame = editingSeparator!.getFrame(forSuperViewFrame: contentView.frame)
             
             case .ended:
-                viewSplitter.splitView(atIndexPath: indexPath,
-                                       withSeparator: editingSeparator!)
-                finishEdtiting()
+                print("Pan ended")
+//                viewSplitter.splitView(atIndexPath: indexPath,
+//                                       withSeparator: editingSeparator!)
+//                finishEdtiting()
             
             case .cancelled, .failed:
-                finishEdtiting()
+                print("Pan cancelled/failed")
+//                finishEdtiting()
             
             default:
                 break
@@ -72,6 +72,7 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
     @objc func didLongPressWithTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
         switch gestureRecognizer.state {
             case .began:
+                print("LongPress began")
                 isEditing = true
                 startPoint = gestureRecognizer.location(in: contentView)
 
@@ -79,30 +80,22 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
                     .getOrientationByLocationsOfTouches(gestureRecognizer.location(ofTouch: 0, in: contentView),
                                                         gestureRecognizer.location(ofTouch: 1, in: contentView))
                 
-//                let proportion =
-//                switch orientation {
-//                    case .horizontal:
-//                        proportion = startPoint!.y / contentView.bounds.height
-//
-//                        sepView = editingSeparator!.getView(forSuperviewFrame: contentView.frame)
-//                    case .vertical:
-//                        proportion = startPoint!.x / contentView.bounds.width
-//                }
-                
                 editingSeparator = Separator(proportion: 0,
                                              orientation: orientation)
                 editingSeparator?.proportion = editingSeparator!
                     .getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
-                                   withSuperViewSize: contentView.bounds.size)
+                                   inSuperView: contentView)
                 
                 sepView = UIView(frame: editingSeparator!.getFrame(forSuperViewFrame: contentView.frame))
                 sepView!.backgroundColor = .black
                 contentView.addSubview(sepView!)
             
             case .cancelled, .ended, .failed:
-                // FIXME: LOngTapping without Panning produces unexpected behaviour
-//                finishEdtiting()
-                print()
+                print("LongPress cancelled/ended/failed")
+                viewSplitter.splitView(atIndexPath: indexPath,
+                                       withSeparator: editingSeparator!)
+                finishEdtiting()
+            
             default:
                 break
         }

@@ -137,6 +137,7 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
         view.backgroundColor = .white
         (view as! SeparatorView).separator = getSplitScreenTreeNode(atIndexPath: indexPath)!.separator!
         (view as! SeparatorView).layoutUpdater = self
+        view.alpha = 0.3
         
         return view
     }
