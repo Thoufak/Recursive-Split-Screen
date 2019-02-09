@@ -12,6 +12,7 @@ class SeparatorView: UICollectionReusableView {
     
     var separator: Separator!
     var layoutUpdater: LayoutUpdater!
+    var parentViewSize: CGSize
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +28,8 @@ class SeparatorView: UICollectionReusableView {
         switch gesture.state {
             case .began, .changed:
                 let proportion = separator.getProportion(forTouchLocation: gesture.location(in: self),
-                                                         inSuperView: self)
+                                                         withSuperViewSize: parentViewSize)
+                print(proportion)
                 separator.proportion = proportion
                 layoutUpdater.reloadData()
 

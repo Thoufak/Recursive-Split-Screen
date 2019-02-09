@@ -44,7 +44,7 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
         
         switch gestureRecognizer.state {
             case .began, .changed:
-                proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.translation(in: contentView),
+                proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
                                                              inSuperView: contentView)
                 editingSeparator?.proportion = proportion
                 sepView?.frame = editingSeparator!.getFrame(forSuperViewFrame: contentView.frame)
@@ -93,7 +93,7 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
                                              orientation: orientation)
                 editingSeparator?.proportion = editingSeparator!
                     .getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
-                                   inSuperView: contentView)
+                                   withSuperViewSize: contentView.bounds.size)
                 
                 sepView = UIView(frame: editingSeparator!.getFrame(forSuperViewFrame: contentView.frame))
                 sepView!.backgroundColor = .black

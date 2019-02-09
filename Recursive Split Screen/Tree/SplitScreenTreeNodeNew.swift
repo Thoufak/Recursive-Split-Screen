@@ -75,12 +75,14 @@ class SplitScreenTreeNodeNew {
         self.separator = separator
         
         primaryChild = SplitScreenTreeNodeNew()
+        primaryChild!.parent = self
         primaryChild!.indexPathProvider = indexPathProvider
         primaryChild!.indexPath = indexPath
         
         self.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
         
         secondaryChild = SplitScreenTreeNodeNew()
+        secondaryChild!.parent = self
         secondaryChild!.indexPathProvider = indexPathProvider
         secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
         

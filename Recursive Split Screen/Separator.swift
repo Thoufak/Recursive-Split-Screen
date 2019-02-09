@@ -42,14 +42,19 @@ class Separator {
     /// Indicates the primaryView's proportion (the secondaryView takes the rest of space)
     var proportion: CGFloat
     let orientation: SeparatorOrientation
-    var thickness: CGFloat = 8.0
+    var thickness: CGFloat
+    var parentSize: CGRect
     
-    static let standardThickness: CGFloat = 8.0
+    static let standardThickness: CGFloat = 16.0
     
-    init(proportion: CGFloat, orientation: SeparatorOrientation, thickness: CGFloat = Separator.standardThickness) {
+    init(proportion: CGFloat,
+         orientation: SeparatorOrientation,
+         parentSize: CGRect
+         thickness: CGFloat = Separator.standardThickness) {
         self.proportion = proportion
         self.orientation = orientation
         self.thickness = thickness
+        self.parentSize = parentSize
     }
     
     func getFrame(forSuperViewFrame superViewFrame: CGRect) -> CGRect {
@@ -70,15 +75,15 @@ class Separator {
     }
     
     func getProportion(forTouchLocation touchLocation: CGPoint,
-                       inSuperView superView: UIView) -> CGFloat {
+                       withSuperViewSize superViewSize: CGSize) -> CGFloat {
 //        let distance = orientation == .horizontal ?
 //            superView.frame.maxX - touchLocation.x :
 //            superView.frame.maxY - touchLocation.y
 //        let divided = superView.frame.divided(atDistance: distance,
 //                                              from: orientation.getEdgeToOffsetFrom())
         let proportion = orientation == .vertical ?
-            touchLocation.x / superView.bounds.width :
-            touchLocation.y / superView.bounds.height
+            touchLocation.x / superViewSize.width :
+            touchLocation.y / superViewSize.height
         
         return proportion
     }
