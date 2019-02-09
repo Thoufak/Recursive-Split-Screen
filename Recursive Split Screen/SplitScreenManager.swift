@@ -102,12 +102,14 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
         assert(indexPath.row % 2 == 0)
         
         let colors: [UIColor] = [
-            #colorLiteral(red: 0.2466010237, green: 0.7337603109, blue: 0.09794580111, alpha: 1),
-            #colorLiteral(red: 0.2063746569, green: 0.5824351285, blue: 0.8851179679, alpha: 1),
-            #colorLiteral(red: 0.8572533312, green: 0.2916841071, blue: 0.253220252, alpha: 1),
-            #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1),
-            #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1),
-            #colorLiteral(red: 0.443669592, green: 0.8423986483, blue: 0.8831705729, alpha: 1),
+            #colorLiteral(red: 0.6117647059, green: 0.8549019608, blue: 0.2509803922, alpha: 1),
+            #colorLiteral(red: 0, green: 0.6117647059, blue: 0.6745098039, alpha: 1),
+            #colorLiteral(red: 0.9960784314, green: 0.8039215686, blue: 0, alpha: 1),
+            #colorLiteral(red: 1, green: 0.2745098039, blue: 0.1607843137, alpha: 1),
+            #colorLiteral(red: 0.5843137255, green: 0.8980392157, blue: 0.7176470588, alpha: 1),
+            #colorLiteral(red: 0.450756164, green: 0.2916669688, blue: 0.5148120241, alpha: 1),
+            #colorLiteral(red: 0.9361913071, green: 0.5840523553, blue: 0, alpha: 1),
+            #colorLiteral(red: 0.05882352941, green: 0.231372549, blue: 0.3647058824, alpha: 1),
         ]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlainColorCollectionViewCell",
                                                       for: indexPath)
@@ -134,10 +136,9 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
                                                                    withReuseIdentifier: "Separator",
                                                                    for: indexPath)
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         (view as! SeparatorView).separator = getSplitScreenTreeNode(atIndexPath: indexPath)!.separator!
         (view as! SeparatorView).layoutUpdater = self
-        view.alpha = 0.3
         
         return view
     }
