@@ -40,7 +40,7 @@ class SplitScreenManager: NSObject {
     
     func getLayoutAttributes() -> [UICollectionViewLayoutAttributes] {
         var attrs = rootNode.getLayoutAttributes(withAllowedSpace: initialSpace)
-//        print(attrs.map { $0.indexPath })
+        
         return attrs
     }
     
