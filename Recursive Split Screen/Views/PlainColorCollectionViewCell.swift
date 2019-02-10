@@ -11,11 +11,7 @@ import UIKit
 class PlainColorCollectionViewCell: UICollectionViewCell {
     var indexPath: IndexPath!
     var viewSplitter: ViewSplitter!
-    var editingSeparator: Separator? {
-        didSet {
-//            print("EditingSeparator is nil? Answer: \(editingSeparator == nil)")
-        }
-    }
+    var editingSeparator: Separator?
     var startPoint: CGPoint?
     var sepView: UIView?
     var isEditing = false
@@ -37,26 +33,15 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
-        guard isEditing else { print("here") ; return }
+        guard isEditing else { return }
         
         switch gestureRecognizer.state {
             case .began, .changed:
-                print("Pan began/changed")
                 let proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
-                                                             inSuperView: contentView)
+                                                             inSuperViewOfSize: contentView.bounds.size)
                 editingSeparator?.proportion = proportion
                 sepView?.frame = editingSeparator!.getFrame(forSuperViewFrame: contentView.frame)
-            
-            case .ended:
-                print("Pan ended")
-//                viewSplitter.splitView(atIndexPath: indexPath,
-//                                       withSeparator: editingSeparator!)
-//                finishEdtiting()
-            
-            case .cancelled, .failed:
-                print("Pan cancelled/failed")
-//                finishEdtiting()
-            
+
             default:
                 break
         }
@@ -72,7 +57,6 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
     @objc func didLongPressWithTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
         switch gestureRecognizer.state {
             case .began:
-                print("LongPress began")
                 isEditing = true
                 startPoint = gestureRecognizer.location(in: contentView)
 
@@ -84,14 +68,13 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
                                              orientation: orientation)
                 editingSeparator?.proportion = editingSeparator!
                     .getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
-                                   inSuperView: contentView)
+                                   inSuperViewOfSize: contentView.bounds.size)
                 
                 sepView = UIView(frame: editingSeparator!.getFrame(forSuperViewFrame: contentView.frame))
                 sepView!.backgroundColor = .black
                 contentView.addSubview(sepView!)
             
             case .cancelled, .ended, .failed:
-                print("LongPress cancelled/ended/failed")
                 viewSplitter.splitView(atIndexPath: indexPath,
                                        withSeparator: editingSeparator!)
                 finishEdtiting()

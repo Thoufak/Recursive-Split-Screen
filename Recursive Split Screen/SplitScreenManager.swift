@@ -15,10 +15,10 @@ import UIKit
 class SplitScreenManager: NSObject {
     var collectionViewDif: UICollectionView!
     let initialSpace: CGRect
-    var rootNode: SplitScreenTreeNodeNew
+    var rootNode: SplitScreenTreeNode
     var nextIndexPathRow = 0
     
-    init(initialSpace: CGRect, rootNode: SplitScreenTreeNodeNew) {
+    init(initialSpace: CGRect, rootNode: SplitScreenTreeNode) {
         self.initialSpace = initialSpace
         self.rootNode = rootNode
         
@@ -29,7 +29,7 @@ class SplitScreenManager: NSObject {
     }
     
     func getNumberOfAllElements() -> Int {
-        func getNumberOfChildren(of node: SplitScreenTreeNodeNew) -> Int {
+        func getNumberOfChildren(of node: SplitScreenTreeNode) -> Int {
             guard node.isContainerNode else { return 0 }
             
             return 2 + getNumberOfChildren(of: node.primaryChild!) + getNumberOfChildren(of: node.secondaryChild!)
@@ -44,8 +44,8 @@ class SplitScreenManager: NSObject {
         return attrs
     }
     
-    func getSplitScreenTreeNode(atIndexPath indexPath: IndexPath) -> SplitScreenTreeNodeNew? {
-        var queue = [SplitScreenTreeNodeNew]()
+    func getSplitScreenTreeNode(atIndexPath indexPath: IndexPath) -> SplitScreenTreeNode? {
+        var queue = [SplitScreenTreeNode]()
         queue.append(rootNode)
         
         while queue.count > 0 {
@@ -68,7 +68,7 @@ class SplitScreenManager: NSObject {
     //MARK: Make methods
 
     static func makeOneScreen() -> SplitScreenManager {
-        let root = SplitScreenTreeNodeNew()
+        let root = SplitScreenTreeNode()
         let newManager = SplitScreenManager(initialSpace: UIApplication.shared.windows[0].frame,
                                             rootNode: root)
         newManager.rootNode.indexPathProvider = newManager
@@ -77,7 +77,7 @@ class SplitScreenManager: NSObject {
     }
     
     static func makeSecondTest() -> SplitScreenManager {
-        let root = SplitScreenTreeNodeNew()
+        let root = SplitScreenTreeNode()
         let newManager = SplitScreenManager(initialSpace: UIApplication.shared.windows[0].frame,
                                             rootNode: root)
         newManager.rootNode.indexPathProvider = newManager
@@ -137,6 +137,8 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
                                                                    withReuseIdentifier: "Separator",
                                                                    for: indexPath)
         view.backgroundColor = .black
+        // Separator views should always appear at the front
+        view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude - 1)
         (view as! SeparatorView).separator = getSplitScreenTreeNode(atIndexPath: indexPath)!.separator!
         (view as! SeparatorView).layoutUpdater = self
         (view as! SeparatorView).configure()
@@ -165,22 +167,10 @@ extension SplitScreenManager: ViewSplitter {
 
 protocol LayoutUpdater {
     func updateLayout()
-    func debugSeps()
 }
 
 extension SplitScreenManager: LayoutUpdater {
     func updateLayout() {
-//        collectionViewDif.reloadData()
         collectionViewDif.collectionViewLayout.invalidateLayout()
-    }
-    
-    func debugSeps() {
-        let paths = collectionViewDif.visibleSupplementaryViews(ofKind: "Separator")
-        print("-----------")
-        for path in paths {
-            let sep = (path as! SeparatorView).separator!
-            print(sep.proportion)
-            
-        }
     }
 }

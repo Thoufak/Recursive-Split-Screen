@@ -72,9 +72,9 @@ class Separator {
     }
     
     func getProportion(forTouchLocation touchLocation: CGPoint,
-                       inSuperView superView: UIView) -> CGFloat {
+                       inSuperViewOfSize superViewSize: CGSize) -> CGFloat {
         return orientation == .vertical ?
-            touchLocation.x / superView.bounds.width :
-            touchLocation.y / superView.bounds.height
+            touchLocation.x / superViewSize.width :
+            touchLocation.y / superViewSize.height
     }
 }

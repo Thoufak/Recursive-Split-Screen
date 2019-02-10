@@ -20,7 +20,7 @@
 		50AF8C62220A163700B1DBC7 /* SplitScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C61220A163700B1DBC7 /* SplitScreenManager.swift */; };
 		50AF8C6C220C111000B1DBC7 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C6B220C111000B1DBC7 /* SeparatorView.swift */; };
 		50AF8C71220DA57C00B1DBC7 /* IndexPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C70220DA57C00B1DBC7 /* IndexPathProvider.swift */; };
-		50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNodeNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNodeNew.swift */; };
+		50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		50AF8C61220A163700B1DBC7 /* SplitScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenManager.swift; sourceTree = "<group>"; };
 		50AF8C6B220C111000B1DBC7 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		50AF8C70220DA57C00B1DBC7 /* IndexPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathProvider.swift; sourceTree = "<group>"; };
-		50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNodeNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenTreeNodeNew.swift; sourceTree = "<group>"; };
+		50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenTreeNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +118,7 @@
 		50AF8C6F220D9C2200B1DBC7 /* Tree */ = {
 			isa = PBXGroup;
 			children = (
-				50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNodeNew.swift */,
+				50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */,
 			);
 			path = Tree;
 			sourceTree = "<group>";
@@ -204,7 +204,7 @@
 				50AF8C5E220A0E2800B1DBC7 /* Separator.swift in Sources */,
 				50AF8C6C220C111000B1DBC7 /* SeparatorView.swift in Sources */,
 				50AF8C60220A10C100B1DBC7 /* extensionCGRect.swift in Sources */,
-				50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNodeNew.swift in Sources */,
+				50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

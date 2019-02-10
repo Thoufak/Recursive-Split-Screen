@@ -44,8 +44,7 @@ class SplitCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
-//        return collectionView?.bounds.size != newBounds.size
+        return collectionView?.bounds.size != newBounds.size
     }
     
     // MARK:

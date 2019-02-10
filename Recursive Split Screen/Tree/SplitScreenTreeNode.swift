@@ -8,20 +8,23 @@
 
 import UIKit
 
-class SplitScreenTreeNodeNew {
-    weak var parent: SplitScreenTreeNodeNew?
-    var primaryChild: SplitScreenTreeNodeNew?
-    var secondaryChild: SplitScreenTreeNodeNew?
+class SplitScreenTreeNode {
+    weak var parent: SplitScreenTreeNode?
+    var primaryChild: SplitScreenTreeNode?
+    var secondaryChild: SplitScreenTreeNode?
     
     var separator: Separator?
     var indexPathProvider: IndexPathProvider!
     var indexPath: IndexPath!
+    
+    var allowedSpaceForLastConfiguration: CGRect?
     
     var isRootNode: Bool { return parent == nil }
     var isContainerNode: Bool { return separator != nil }
     var isEndScreen: Bool { return !isContainerNode }
     
     func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
+        allowedSpaceForLastConfiguration = allowedSpace
         var attributes = [UICollectionViewLayoutAttributes]()
         
         if isContainerNode {
@@ -56,17 +59,17 @@ class SplitScreenTreeNodeNew {
     }
     
     /// Splits the current EndScreenNode, and returns the secondaryChild (newely created endScreen)
-    func split(bySeparator separator: Separator) -> SplitScreenTreeNodeNew {
+    func split(bySeparator separator: Separator) -> SplitScreenTreeNode {
         self.separator = separator
         
-        primaryChild = SplitScreenTreeNodeNew()
+        primaryChild = SplitScreenTreeNode()
         primaryChild!.parent = self
         primaryChild!.indexPathProvider = indexPathProvider
         primaryChild!.indexPath = indexPath
         
         self.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
         
-        secondaryChild = SplitScreenTreeNodeNew()
+        secondaryChild = SplitScreenTreeNode()
         secondaryChild!.parent = self
         secondaryChild!.indexPathProvider = indexPathProvider
         secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
