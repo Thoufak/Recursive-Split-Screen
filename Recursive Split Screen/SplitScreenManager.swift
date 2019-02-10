@@ -9,7 +9,7 @@
 import UIKit
 
 /// Tree hierarchy
-// If you don't inherit from NSOBject, the compiler says:
+// If you don't inherit from NSOBject, the compiler gives an error:
 // "does not conform to protocol 'NSObjectProtocol'", and does
 // not allow making it the delegate and datasource of collectionView
 class SplitScreenManager: NSObject {

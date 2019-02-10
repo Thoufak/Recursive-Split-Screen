@@ -21,6 +21,7 @@
 		50AF8C6C220C111000B1DBC7 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C6B220C111000B1DBC7 /* SeparatorView.swift */; };
 		50AF8C71220DA57C00B1DBC7 /* IndexPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C70220DA57C00B1DBC7 /* IndexPathProvider.swift */; };
 		50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */; };
+		50AF8C942210A59000B1DBC7 /* SplitScreenDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C932210A59000B1DBC7 /* SplitScreenDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		50AF8C6B220C111000B1DBC7 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		50AF8C70220DA57C00B1DBC7 /* IndexPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathProvider.swift; sourceTree = "<group>"; };
 		50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenTreeNode.swift; sourceTree = "<group>"; };
+		50AF8C932210A59000B1DBC7 /* SplitScreenDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				50AF8C61220A163700B1DBC7 /* SplitScreenManager.swift */,
 				50AF8C70220DA57C00B1DBC7 /* IndexPathProvider.swift */,
 				50AF8C5D220A0E2800B1DBC7 /* Separator.swift */,
+				50AF8C922210A56700B1DBC7 /* New architecture */,
 				50AF8C6F220D9C2200B1DBC7 /* Tree */,
 				50AF8C68220AFB5E00B1DBC7 /* Views */,
 				50AF8C67220AFB1E00B1DBC7 /* UIKit extensions */,
@@ -121,6 +124,14 @@
 				50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */,
 			);
 			path = Tree;
+			sourceTree = "<group>";
+		};
+		50AF8C922210A56700B1DBC7 /* New architecture */ = {
+			isa = PBXGroup;
+			children = (
+				50AF8C932210A59000B1DBC7 /* SplitScreenDataManager.swift */,
+			);
+			path = "New architecture";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50AF8C942210A59000B1DBC7 /* SplitScreenDataManager.swift in Sources */,
 				50AF8C62220A163700B1DBC7 /* SplitScreenManager.swift in Sources */,
 				50AF8C47220A08A400B1DBC7 /* CollectionViewController.swift in Sources */,
 				50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */,

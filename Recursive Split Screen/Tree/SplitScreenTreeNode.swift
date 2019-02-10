@@ -14,6 +14,7 @@ class SplitScreenTreeNode {
     var secondaryChild: SplitScreenTreeNode?
     
     var separator: Separator?
+    
     var indexPathProvider: IndexPathProvider!
     var indexPath: IndexPath!
     
