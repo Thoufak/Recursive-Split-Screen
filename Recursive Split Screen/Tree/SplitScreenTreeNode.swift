@@ -47,21 +47,28 @@ class SplitScreenTreeNode {
         return attributes
     }
     
-    /// Splits the current EndScreenNode, and returns the secondaryChild (newely created endScreen)
+    /// Splits the current end-screen-node (making it a container-node),
+    /// and returns the secondaryChild (newely created end-screen-node)
     func split(bySeparator separator: Separator) -> SplitScreenTreeNode {
+        func getNewChild() -> SplitScreenTreeNode {
+            let child = SplitScreenTreeNode()
+            child.parent = self
+            child.indexPathProvider = indexPathProvider
+            
+            return child
+        }
+        
         self.separator = separator
         
-        primaryChild = SplitScreenTreeNode()
-        primaryChild!.parent = self
-        primaryChild!.indexPathProvider = indexPathProvider
-        primaryChild!.indexPath = indexPath
+        primaryChild = getNewChild()
+        secondaryChild = getNewChild()
         
-        self.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
-        
-        secondaryChild = SplitScreenTreeNode()
-        secondaryChild!.parent = self
-        secondaryChild!.indexPathProvider = indexPathProvider
-        secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: 0)
+        // Primary child (end-screen-node) is assigned the old end-node's indexPath.
+        // Current node (container-node) is assigned the next indexPath (row + 1)
+        // Secondary child (end-screen-node) is assigned the next indexPath (row + 1)
+        primaryChild!.indexPath   = indexPath
+        self.indexPath            = indexPathProvider.getNewIndexPath(forSection: indexPath.section)
+        secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: indexPath.section)
         
         return secondaryChild!
     }

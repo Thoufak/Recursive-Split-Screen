@@ -12,7 +12,6 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
     var indexPath: IndexPath!
     var viewSplitter: ViewSplitter!
     var editingSeparator: Separator?
-    var startPoint: CGPoint?
     var sepView: UIView?
     var isEditing = false
     
@@ -38,7 +37,7 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
         switch gestureRecognizer.state {
             case .began, .changed:
                 let proportion = editingSeparator!.getProportion(forTouchLocation: gestureRecognizer.location(in: contentView),
-                                                             inSuperViewOfSize: contentView.bounds.size)
+                                                                 inSuperViewOfSize: contentView.bounds.size)
                 editingSeparator?.proportion = proportion
                 sepView?.frame = editingSeparator!.getFrame(forSuperViewFrame: contentView.frame)
 
@@ -58,7 +57,6 @@ class PlainColorCollectionViewCell: UICollectionViewCell {
         switch gestureRecognizer.state {
             case .began:
                 isEditing = true
-                startPoint = gestureRecognizer.location(in: contentView)
 
                 let orientation = SeparatorOrientation
                     .getOrientationByLocationsOfTouches(gestureRecognizer.location(ofTouch: 0, in: contentView),
