@@ -77,4 +77,13 @@ class Separator {
             touchLocation.x / superViewSize.width :
             touchLocation.y / superViewSize.height
     }
+    
+    func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect,
+                             at indexPath: IndexPath) -> UICollectionViewLayoutAttributes {
+        let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
+                                                        with: indexPath)
+        sepAttrs.frame = getFrame(forSuperViewFrame: allowedSpace)
+        
+        return sepAttrs
+    }
 }

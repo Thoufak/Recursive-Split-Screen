@@ -36,7 +36,7 @@ class SplitScreenTreeNode {
             let divided = allowedSpace.divided(by: separator)
             
             attributes.append(contentsOf: primaryChild.getLayoutAttributes(withAllowedSpace: divided.remainder))
-            attributes.append(getSeparatorAttributes(withAllowedSpace: allowedSpace))
+            attributes.append(separator.getLayoutAttributes(withAllowedSpace: allowedSpace, at: indexPath))
             attributes.append(contentsOf: secondaryChild.getLayoutAttributes(withAllowedSpace: divided.slice))
         } else {
             let endScreenAttributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
@@ -45,17 +45,6 @@ class SplitScreenTreeNode {
         }
         
         return attributes
-    }
-    
-    private func getSeparatorAttributes(withAllowedSpace allowedSpace: CGRect) -> UICollectionViewLayoutAttributes {
-        // FIXME:
-        guard let separator = separator else { fatalError() }
-        
-        let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
-                                                        with: indexPath)
-        sepAttrs.frame = separator.getFrame(forSuperViewFrame: allowedSpace)
-        
-        return sepAttrs
     }
     
     /// Splits the current EndScreenNode, and returns the secondaryChild (newely created endScreen)
