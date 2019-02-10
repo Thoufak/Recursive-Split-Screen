@@ -139,6 +139,7 @@ extension SplitScreenManager: UICollectionViewDataSource, UICollectionViewDelega
         view.backgroundColor = .black
         (view as! SeparatorView).separator = getSplitScreenTreeNode(atIndexPath: indexPath)!.separator!
         (view as! SeparatorView).layoutUpdater = self
+        (view as! SeparatorView).configure()
         
         return view
     }
@@ -163,11 +164,23 @@ extension SplitScreenManager: ViewSplitter {
 }
 
 protocol LayoutUpdater {
-    func reloadData()
+    func updateLayout()
+    func debugSeps()
 }
 
 extension SplitScreenManager: LayoutUpdater {
-    func reloadData() {
-        collectionViewDif.reloadData()
+    func updateLayout() {
+//        collectionViewDif.reloadData()
+        collectionViewDif.collectionViewLayout.invalidateLayout()
+    }
+    
+    func debugSeps() {
+        let paths = collectionViewDif.visibleSupplementaryViews(ofKind: "Separator")
+        print("-----------")
+        for path in paths {
+            let sep = (path as! SeparatorView).separator!
+            print(sep.proportion)
+            
+        }
     }
 }

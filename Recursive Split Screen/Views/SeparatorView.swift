@@ -12,15 +12,22 @@ class SeparatorView: UICollectionReusableView {
     
     var separator: Separator!
     var layoutUpdater: LayoutUpdater!
+    var id = 0
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
+    // more like an init
+    func configure() {
         addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
+        id = Int(arc4random())
+        print("configured for \(id)")
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        print("reused")
+        id = 0
+        
+//        removeGestureRecognizer(gestureRecognizers![0])
     }
     
     @objc func didPan(gesture: UIPanGestureRecognizer) {
@@ -28,9 +35,12 @@ class SeparatorView: UICollectionReusableView {
             case .began, .changed:
 //                let proportion = separator.getProportion(forTouchLocation: gesture.location(in: self),
 //                                                         inSuperView: )
-//                print(proportion)
-//                separator.proportion = proportion
-                layoutUpdater.reloadData()
+                // test purposes:
+                separator.proportion = separator.orientation == .vertical ?
+                    abs(gesture.translation(in: self).x) / 150 :
+                    abs(gesture.translation(in: self).y) / 150
+                
+                layoutUpdater.updateLayout()
 
             default:
                 break
