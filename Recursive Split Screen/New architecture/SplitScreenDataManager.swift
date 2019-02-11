@@ -41,10 +41,10 @@ class SplitScreenDataManager: NSObject {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self,
                                                           action: #selector(didPan))
         
-        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(didTrippleTap))
-        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
-        collectionView.addGestureRecognizer(trippleTapGestureRecognizer)
+//        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
+//                                                                 action: #selector(didTrippleTap))
+//        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
+//        collectionView.addGestureRecognizer(trippleTapGestureRecognizer)
         
         panGestureRecognizer.delegate = self
         collectionView.addGestureRecognizer(panGestureRecognizer)
@@ -118,6 +118,17 @@ class SplitScreenDataManager: NSObject {
 
 extension SplitScreenDataManager: LayoutAttributesManager {
     func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
+        //        var attributes = [UICollectionViewLayoutAttributes]()
+        //
+        //        for (sectionindex, rootNode) in rootNodes {
+        //            let y = CGFloat(sectionindex) * allowedSpace.height
+        //            let sectionAllowedSpace = allowedSpace
+        //            sectionAllowedSpace.offsetBy(dx: 0, dy: y)
+        //            attributes.append(contentsOf: rootNode.getLayoutAttributes(withAllowedSpace: allowedSpace).compactMap { $0 })
+        //        }
+        //
+        //        return attributes
+        
         return rootNodes.values.flatMap { $0.getLayoutAttributes(withAllowedSpace: allowedSpace) }
     }
 }
@@ -263,10 +274,10 @@ extension SplitScreenDataManager {
         }
     }
     
-    @objc func didTrippleTap() {
-        addRootNode()
-        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
-    }
+//    @objc func didTrippleTap() {
+//        addRootNode()
+//        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
+//    }
 }
 
 extension SplitScreenDataManager: UIGestureRecognizerDelegate {

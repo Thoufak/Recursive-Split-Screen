@@ -8,6 +8,4 @@
 
 import UIKit
 
-class EndScreenView: UICollectionViewCell {
-//    var indexPath: IndexPath!
-}
+class EndScreenView: UICollectionViewCell {}
