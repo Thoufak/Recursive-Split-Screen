@@ -10,13 +10,24 @@ import UIKit
 
 class SplitScreenVIew: UICollectionView {
     
-    var splitScreenDelegate: SplitScreenDelegate
+    var splitScreenDelegate: SplitScreenDelegate? {
+        didSet { dataManager.splitScreenDelegate = splitScreenDelegate }
+    }
+    
+    var dataManager: SplitScreenDataManager!
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: SplitScreenCollectionViewLayout())
         
-        let dataManager = SplitScreenDataManager()
-        dataManager.addRootNode()
+        // FIXME:
+        
+        register(EndScreenView.self,
+                 forCellWithReuseIdentifier: "EndScreenView")
+        register(SeparatorView.self,
+                 forSupplementaryViewOfKind: "Separator",
+                 withReuseIdentifier: "Separator")
+        
+        dataManager = SplitScreenDataManager(allowedSpace: UIApplication.shared.keyWindow!.bounds)
     }
     
     required init?(coder aDecoder: NSCoder) {

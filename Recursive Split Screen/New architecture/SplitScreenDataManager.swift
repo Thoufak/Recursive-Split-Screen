@@ -9,14 +9,34 @@
 import UIKit
 
 class SplitScreenDataManager: NSObject {
-    var delegate: SplitScreenDelegate?
-    
+    var splitScreenDelegate: SplitScreenDelegate?
+    var allowedSpace: CGRect
     private var rootNodes = [Int:SplitScreenTreeNode]()
+    
+    init(allowedSpace: CGRect) {
+        self.allowedSpace = allowedSpace
+        super.init()
+        
+        addRootNode()
+        addGestureRecognizers()
+    }
+    
+    func addGestureRecognizers() {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressWithTwoTouches))
+        longPressGestureRecognizer.numberOfTouchesRequired = 2
+        collectionView.addGestureRecognizer(longPressGestureRecognizer)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan))
+        panGestureRecognizer.delegate = self
+        collectionView.addGestureRecognizer(panGestureRecognizer)
+    }
     
     func addRootNode() {
         let newTreeNode = SplitScreenTreeNode()
-        newTreeNode.indexPathProvider = IndexPathProvider()
-        rootNodes.updateValue(, forKey: rootNodes.count)
+        let newSection = rootNodes.count
+        newTreeNode.indexPathProvider = IndexPathProvider(section: newSection)
+        newTreeNode.indexPath = newTreeNode.indexPathProvider.next()
+        rootNodes.updateValue(newTreeNode, forKey: newSection)
     }
     
     func numberOfItems(inSection section: Int) -> Int? {
@@ -31,9 +51,30 @@ class SplitScreenDataManager: NSObject {
         return 1 + getNumberOfChildren(of: neededRootNode)
     }
     
-    func node(with indexPath: IndexPath) {}
+    func node(with indexPath: IndexPath) -> SplitScreenTreeNode? {
+        var queue = [SplitScreenTreeNode]()
+        queue.append(rootNodes[indexPath.section]!)
+        
+        while queue.count > 0 {
+            let currentNode = queue.first!
+            queue = Array(queue.dropFirst())
+            
+            if currentNode.indexPath == indexPath {
+                return currentNode
+            }
+            
+            if currentNode.isContainerNode {
+                queue.append(currentNode.primaryChild!)
+                queue.append(currentNode.secondaryChild!)
+            }
+        }
+        
+        return nil
+    }
     
-    func layoutAttributes() {}
+    func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
+        return rootNodes.values.flatMap { $0.getLayoutAttributes(withAllowedSpace: allowedSpace) }
+    }
 }
 
 extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -51,7 +92,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EndScreenView",
                                                       for: indexPath) as! EndScreenView
 //        cell.indexPath = indexPath
-        delegate?.willDisplayCell(cell, at: indexPath)
+        splitScreenDelegate?.willDisplayCell(cell, at: indexPath)
         
         return cell
     }
@@ -63,8 +104,24 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
                                                                             withReuseIdentifier: "Separator",
                                                                             for: indexPath)
         
-        delegate?.willDisplaySeparatorView(separatorView)
+        splitScreenDelegate?.willDisplaySeparatorView(separatorView)
         
         return separatorView
     }
+}
+
+// MARK: Handling gestures
+
+extension SplitScreenDataManager {
+    func didLongPressWithTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
+        
+    }
+    
+    func didPan(gestureRecognizer: UIPanGestureRecognizer) {
+        
+    }
+}
+
+extension SplitScreenDataManager: UIGestureRecognizerDelegate {
+    
 }
