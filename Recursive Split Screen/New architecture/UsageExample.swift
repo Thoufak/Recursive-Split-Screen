@@ -12,6 +12,9 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         let splitScreen = SplitScreenView()
         splitScreen.splitScreenDelegate = self
+        
+        view.addSubview(splitScreen)
+        NSLayoutConstraint.pinEdges(of: splitScreen, toEdgesOf: view)
     }
 }
 

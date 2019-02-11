@@ -24,10 +24,13 @@
 		50AF8C98221167C100B1DBC7 /* EndScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C97221167C100B1DBC7 /* EndScreenView.swift */; };
 		50AF8C9A2211686000B1DBC7 /* SplitScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C992211686000B1DBC7 /* SplitScreenDelegate.swift */; };
 		50AF8C9C221169B600B1DBC7 /* UsageExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C9B221169B600B1DBC7 /* UsageExample.swift */; };
-		50AF8C9E22116A2D00B1DBC7 /* SplitScreenVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C9D22116A2D00B1DBC7 /* SplitScreenVIew.swift */; };
+		50AF8C9E22116A2D00B1DBC7 /* SplitScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C9D22116A2D00B1DBC7 /* SplitScreen.swift */; };
 		50AF8CA022116ABB00B1DBC7 /* SplitScreenCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8C9F22116ABB00B1DBC7 /* SplitScreenCollectionViewLayout.swift */; };
 		50AF8CA222116B5400B1DBC7 /* LayoutAttributesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8CA122116B5400B1DBC7 /* LayoutAttributesManager.swift */; };
 		50AF8CA42211704C00B1DBC7 /* IndexPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8CA32211704C00B1DBC7 /* IndexPathProvider.swift */; };
+		50AF8CA822117AB300B1DBC7 /* extensionUICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8CA722117AB300B1DBC7 /* extensionUICollectionView.swift */; };
+		50AF8CAA221187FD00B1DBC7 /* LayoutUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8CA9221187FD00B1DBC7 /* LayoutUpdater.swift */; };
+		50AF8CAC22118BD000B1DBC7 /* SepartorEditingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF8CAB22118BD000B1DBC7 /* SepartorEditingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,10 +53,13 @@
 		50AF8C97221167C100B1DBC7 /* EndScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScreenView.swift; sourceTree = "<group>"; };
 		50AF8C992211686000B1DBC7 /* SplitScreenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenDelegate.swift; sourceTree = "<group>"; };
 		50AF8C9B221169B600B1DBC7 /* UsageExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageExample.swift; sourceTree = "<group>"; };
-		50AF8C9D22116A2D00B1DBC7 /* SplitScreenVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenVIew.swift; sourceTree = "<group>"; };
+		50AF8C9D22116A2D00B1DBC7 /* SplitScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreen.swift; sourceTree = "<group>"; };
 		50AF8C9F22116ABB00B1DBC7 /* SplitScreenCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitScreenCollectionViewLayout.swift; sourceTree = "<group>"; };
 		50AF8CA122116B5400B1DBC7 /* LayoutAttributesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutAttributesManager.swift; sourceTree = "<group>"; };
 		50AF8CA32211704C00B1DBC7 /* IndexPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathProvider.swift; sourceTree = "<group>"; };
+		50AF8CA722117AB300B1DBC7 /* extensionUICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionUICollectionView.swift; sourceTree = "<group>"; };
+		50AF8CA9221187FD00B1DBC7 /* LayoutUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutUpdater.swift; sourceTree = "<group>"; };
+		50AF8CAB22118BD000B1DBC7 /* SepartorEditingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SepartorEditingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +97,6 @@
 				50AF8C61220A163700B1DBC7 /* SplitScreenManager.swift */,
 				50AF8C5D220A0E2800B1DBC7 /* Separator.swift */,
 				50AF8C922210A56700B1DBC7 /* New architecture */,
-				50AF8C6F220D9C2200B1DBC7 /* Tree */,
 				50AF8C68220AFB5E00B1DBC7 /* Views */,
 				50AF8C67220AFB1E00B1DBC7 /* UIKit extensions */,
 				50AF8C5C220A0CF400B1DBC7 /* Supporting files */,
@@ -114,6 +119,7 @@
 			children = (
 				50AF8C56220A09D900B1DBC7 /* extensionNSLayoutConstraint.swift */,
 				50AF8C5F220A10C100B1DBC7 /* extensionCGRect.swift */,
+				50AF8CA722117AB300B1DBC7 /* extensionUICollectionView.swift */,
 			);
 			path = "UIKit extensions";
 			sourceTree = "<group>";
@@ -129,25 +135,20 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		50AF8C6F220D9C2200B1DBC7 /* Tree */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Tree;
-			sourceTree = "<group>";
-		};
 		50AF8C922210A56700B1DBC7 /* New architecture */ = {
 			isa = PBXGroup;
 			children = (
-				50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */,
 				50AF8C9B221169B600B1DBC7 /* UsageExample.swift */,
-				50AF8C9D22116A2D00B1DBC7 /* SplitScreenVIew.swift */,
+				50AF8C72220DDED800B1DBC7 /* SplitScreenTreeNode.swift */,
+				50AF8C9D22116A2D00B1DBC7 /* SplitScreen.swift */,
 				50AF8C992211686000B1DBC7 /* SplitScreenDelegate.swift */,
 				50AF8C932210A59000B1DBC7 /* SplitScreenDataManager.swift */,
+				50AF8CAB22118BD000B1DBC7 /* SepartorEditingManager.swift */,
 				50AF8C9F22116ABB00B1DBC7 /* SplitScreenCollectionViewLayout.swift */,
 				50AF8CA122116B5400B1DBC7 /* LayoutAttributesManager.swift */,
 				50AF8C97221167C100B1DBC7 /* EndScreenView.swift */,
 				50AF8CA32211704C00B1DBC7 /* IndexPathProvider.swift */,
+				50AF8CA9221187FD00B1DBC7 /* LayoutUpdater.swift */,
 			);
 			path = "New architecture";
 			sourceTree = "<group>";
@@ -231,15 +232,18 @@
 				50AF8C9C221169B600B1DBC7 /* UsageExample.swift in Sources */,
 				50AF8C5B220A0B0500B1DBC7 /* SplitCollectionViewLayout.swift in Sources */,
 				50AF8C59220A0AB900B1DBC7 /* PlainColorCollectionViewCell.swift in Sources */,
-				50AF8C9E22116A2D00B1DBC7 /* SplitScreenVIew.swift in Sources */,
+				50AF8C9E22116A2D00B1DBC7 /* SplitScreen.swift in Sources */,
+				50AF8CAA221187FD00B1DBC7 /* LayoutUpdater.swift in Sources */,
 				50AF8C9A2211686000B1DBC7 /* SplitScreenDelegate.swift in Sources */,
 				50AF8C45220A08A400B1DBC7 /* AppDelegate.swift in Sources */,
 				50AF8C57220A09D900B1DBC7 /* extensionNSLayoutConstraint.swift in Sources */,
+				50AF8CAC22118BD000B1DBC7 /* SepartorEditingManager.swift in Sources */,
 				50AF8C5E220A0E2800B1DBC7 /* Separator.swift in Sources */,
 				50AF8C6C220C111000B1DBC7 /* SeparatorView.swift in Sources */,
 				50AF8C60220A10C100B1DBC7 /* extensionCGRect.swift in Sources */,
 				50AF8CA42211704C00B1DBC7 /* IndexPathProvider.swift in Sources */,
 				50AF8CA222116B5400B1DBC7 /* LayoutAttributesManager.swift in Sources */,
+				50AF8CA822117AB300B1DBC7 /* extensionUICollectionView.swift in Sources */,
 				50AF8C73220DDED800B1DBC7 /* SplitScreenTreeNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
