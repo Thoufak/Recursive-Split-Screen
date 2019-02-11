@@ -18,22 +18,28 @@ class SplitScreenTreeNode {
     var indexPathProvider: IndexPathProvider!
     var indexPath: IndexPath!
     
-    var allowedSpaceForLastConfiguration: CGRect?
+    let recursionLevel: Int
     
     var isRootNode: Bool { return parent == nil }
     var isContainerNode: Bool { return separator != nil }
     var isEndScreen: Bool { return !isContainerNode }
     
+    static var maximumRecursionLevel = 5
+    var canSplit: Bool { return recursionLevel < SplitScreenTreeNode.maximumRecursionLevel }
+    
+    init(recursionLevel: Int = 0) {
+        self.recursionLevel = recursionLevel
+    }
+    
     func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect) -> [UICollectionViewLayoutAttributes] {
-        allowedSpaceForLastConfiguration = allowedSpace
         var attributes = [UICollectionViewLayoutAttributes]()
         
         if isContainerNode {
-            // FIXME:
             guard let separator = separator,
                   let primaryChild = primaryChild,
                   let secondaryChild = secondaryChild
                   else { fatalError() }
+            
             let divided = allowedSpace.divided(by: separator)
             
             attributes.append(contentsOf: primaryChild.getLayoutAttributes(withAllowedSpace: divided.remainder))
@@ -49,10 +55,9 @@ class SplitScreenTreeNode {
     }
     
     /// Splits the current end-screen-node (making it a container-node),
-    /// and returns the secondaryChild (newely created end-screen-node)
-    func split(bySeparator separator: Separator) -> SplitScreenTreeNode {
+    func split(bySeparator separator: Separator) {
         func getNewChild() -> SplitScreenTreeNode {
-            let child = SplitScreenTreeNode()
+            let child = SplitScreenTreeNode(recursionLevel: recursionLevel + 1)
             child.parent = self
             child.indexPathProvider = indexPathProvider
             
@@ -70,7 +75,5 @@ class SplitScreenTreeNode {
         primaryChild!.indexPath   = indexPath
         self.indexPath            = indexPathProvider.next()
         secondaryChild!.indexPath = indexPathProvider.next()
-        
-        return secondaryChild!
     }
 }

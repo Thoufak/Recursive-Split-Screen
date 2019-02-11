@@ -26,10 +26,12 @@ class SplitScreenDataManager: NSObject {
     }
     
     func addGestureRecognizers() {
+        // Editing
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
                                                                       action: #selector(didLongPress))
         collectionView.addGestureRecognizer(longPressGestureRecognizer)
         
+        // Splitting
         let longPressWithTwoTouchesGestureRecognizer = UILongPressGestureRecognizer(target: self,
                                                                                     action: #selector(didLongPressWIthTwoTouches))
         longPressWithTwoTouchesGestureRecognizer.numberOfTouchesRequired = 2
@@ -37,7 +39,7 @@ class SplitScreenDataManager: NSObject {
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self,
                                                           action: #selector(didPan))
-        
+// TODO: multiscreen feature
 //        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
 //                                                                 action: #selector(didTrippleTap))
 //        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
@@ -122,6 +124,7 @@ class SplitScreenDataManager: NSObject {
 
 extension SplitScreenDataManager: LayoutAttributesManager {
     func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
+        // TODO: multiscreen feature
         //        var attributes = [UICollectionViewLayoutAttributes]()
         //
         //        for (sectionindex, rootNode) in rootNodes {
@@ -151,7 +154,7 @@ extension SplitScreenDataManager: LayoutUpdater {
 
 // MARK: ViewSplitter
 
-extension SplitScreenDataManager {
+extension SplitScreenDataManager: ViewSplitter {
     func splitEndNode(atIndexPath indexPath: IndexPath, withSeparator separator: Separator) {
         guard let neededNode = node(with: indexPath) else { return }
         guard neededNode.isEndScreen else { return }
@@ -198,7 +201,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
 // MARK: Handling gestures
 
 extension SplitScreenDataManager {
-    // Separator editing (start)
+    /// Separator editing (start)
     @objc func didLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
         let location = gestureRecognizer.location(in: collectionView)
         
@@ -221,13 +224,16 @@ extension SplitScreenDataManager {
         }
     }
     
-    // Separator insertion
+    /// Separator insertion
     @objc func didLongPressWIthTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
         let location = gestureRecognizer.location(in: collectionView)
         
         switch gestureRecognizer.state {
             case .began:
                 guard let endViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
+                // Guard: the node can split
+                guard node(with: endViewIndexPath)?.canSplit ?? false else { return }
+                
                 let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
                 let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)
                 
@@ -239,8 +245,6 @@ extension SplitScreenDataManager {
                 let orientation = SeparatorOrientation.getOrientationByLocationsOfTouches(touch1location,
                                                                                           touch2location)
                 let separator = Separator(proportion: 0, orientation: orientation)
-//                let containerIndexPath = IndexPath(item: endViewIndexPath.item + 1,
-//                                                   section: endViewIndexPath.section)
                 separtorEditingManager.startEditing(separator,
                                                     parentBounds: frameOfEndNode(with: endViewIndexPath)!)
                 splitEndNode(atIndexPath: endViewIndexPath, withSeparator: separator)
@@ -257,7 +261,7 @@ extension SplitScreenDataManager {
         }
     }
     
-    // Separator editing
+    /// Separator editing
     @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
         let location = gestureRecognizer.location(in: collectionView)
         
@@ -274,7 +278,7 @@ extension SplitScreenDataManager {
                 break
         }
     }
-    
+// TODO: multiscreen feature
 //    @objc func didTrippleTap() {
 //        addRootNode()
 //        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
@@ -284,7 +288,6 @@ extension SplitScreenDataManager {
 extension SplitScreenDataManager: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // FIXME:
         return true
     }
 }

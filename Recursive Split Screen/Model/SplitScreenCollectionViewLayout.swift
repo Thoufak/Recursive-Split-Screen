@@ -38,14 +38,8 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return layoutAttributesCache[indexPath.row]
+        return layoutAttributesCache[indexPath.item]
     }
-    
-//    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-//        return collectionView?.bounds.size != newBounds.size
-//    }
-    
-    // MARK:
     
     func calculateLayoutAttributes() {
         layoutAttributesCache = layoutAttributesManager.layoutAttributes()
