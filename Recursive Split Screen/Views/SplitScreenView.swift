@@ -11,10 +11,10 @@ import UIKit
 class SplitScreenView: UICollectionView {
     
     var splitScreenDelegate: SplitScreenDelegate? {
-        didSet { dataManager.splitScreenDelegate = splitScreenDelegate }
+        didSet { dataManager?.splitScreenDelegate = splitScreenDelegate }
     }
     
-    var dataManager: SplitScreenDataManager!
+    private var dataManager: SplitScreenDataManager?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         let layout = SplitScreenCollectionViewLayout()

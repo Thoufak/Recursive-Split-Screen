@@ -9,11 +9,11 @@
 import UIKit
 
 class SplitScreenDataManager: NSObject {
-    var collectionView: UICollectionView
-    var allowedSpace: CGRect
+    private var collectionView: UICollectionView
+    private var allowedSpace: CGRect
     private var rootNodes = [Int:SplitScreenTreeNode]()
     var splitScreenDelegate: SplitScreenDelegate?
-    var separtorEditingManager = SepartorEditingManager()
+    private var separtorEditingManager = SepartorEditingManager()
     
     
     init(allowedSpace: CGRect, collectionView: UICollectionView) {
@@ -25,7 +25,7 @@ class SplitScreenDataManager: NSObject {
         addGestureRecognizers()
     }
     
-    func addGestureRecognizers() {
+    private func addGestureRecognizers() {
         // Editing
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
                                                                       action: #selector(didLongPress))
@@ -49,7 +49,7 @@ class SplitScreenDataManager: NSObject {
         collectionView.addGestureRecognizer(panGestureRecognizer)
     }
     
-    func addRootNode() {
+    private func addRootNode() {
         let newTreeNode = SplitScreenTreeNode()
         let newSection = rootNodes.count
         newTreeNode.indexPathProvider = IndexPathProvider(section: newSection)
@@ -57,7 +57,7 @@ class SplitScreenDataManager: NSObject {
         rootNodes.updateValue(newTreeNode, forKey: newSection)
     }
     
-    func numberOfItems(inSection section: Int) -> Int? {
+    private func numberOfItems(inSection section: Int) -> Int? {
         func getNumberOfChildren(of node: SplitScreenTreeNode) -> Int {
             guard node.isContainerNode else { return 0 }
             
@@ -69,7 +69,7 @@ class SplitScreenDataManager: NSObject {
         return 1 + getNumberOfChildren(of: neededRootNode)
     }
     
-    func node(with indexPath: IndexPath) -> SplitScreenTreeNode? {
+    private func node(with indexPath: IndexPath) -> SplitScreenTreeNode? {
         var queue = [SplitScreenTreeNode]()
         queue.append(rootNodes[indexPath.section]!)
         
@@ -90,7 +90,7 @@ class SplitScreenDataManager: NSObject {
         return nil
     }
     
-    func frameOfContainerNode(with indexPath: IndexPath) -> CGRect? {
+    private func frameOfContainerNode(with indexPath: IndexPath) -> CGRect? {
         func unionFramesOfChildren(ofContainerNodeAt indexPath: IndexPath) -> CGRect? {
             guard let neededNode = node(with: indexPath) else { return nil }
             guard neededNode.isContainerNode else { return nil }
@@ -112,7 +112,7 @@ class SplitScreenDataManager: NSObject {
         return unionFramesOfChildren(ofContainerNodeAt: indexPath)
     }
     
-    func frameOfEndNode(with indexPath: IndexPath) -> CGRect? {
+    private func frameOfEndNode(with indexPath: IndexPath) -> CGRect? {
         guard let neededNode = node(with: indexPath) else { return nil }
         guard neededNode.isEndScreen else { return nil }
         

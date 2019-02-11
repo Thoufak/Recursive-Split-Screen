@@ -41,7 +41,7 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
         return layoutAttributesCache[indexPath.item]
     }
     
-    func calculateLayoutAttributes() {
+    private func calculateLayoutAttributes() {
         layoutAttributesCache = layoutAttributesManager.layoutAttributes()
     }
 }
