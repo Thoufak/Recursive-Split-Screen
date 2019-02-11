@@ -8,10 +8,15 @@
 
 import UIKit
 
-class SplitScreenView: UICollectionView {
+class SplitScreenVIew: UICollectionView {
+    
+    var splitScreenDelegate: SplitScreenDelegate
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: SplitScreenCollectionViewLayout())
+        
+        let dataManager = SplitScreenDataManager()
+        dataManager.addRootNode()
     }
     
     required init?(coder aDecoder: NSCoder) {

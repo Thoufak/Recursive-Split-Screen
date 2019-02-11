@@ -68,8 +68,8 @@ class SplitScreenTreeNode {
         // Current node (container-node) is assigned the next indexPath (row + 1)
         // Secondary child (end-screen-node) is assigned the next indexPath (row + 1)
         primaryChild!.indexPath   = indexPath
-        self.indexPath            = indexPathProvider.getNewIndexPath(forSection: indexPath.section)
-        secondaryChild!.indexPath = indexPathProvider.getNewIndexPath(forSection: indexPath.section)
+        self.indexPath            = indexPathProvider.next()
+        secondaryChild!.indexPath = indexPathProvider.next()
         
         return secondaryChild!
     }

@@ -13,9 +13,23 @@ class SplitScreenDataManager: NSObject {
     
     private var rootNodes = [Int:SplitScreenTreeNode]()
     
-    func addRootNode() {}
+    func addRootNode() {
+        let newTreeNode = SplitScreenTreeNode()
+        newTreeNode.indexPathProvider = IndexPathProvider()
+        rootNodes.updateValue(, forKey: rootNodes.count)
+    }
     
-    func numberOfItems(inSection section: Int) -> Int {}
+    func numberOfItems(inSection section: Int) -> Int? {
+        func getNumberOfChildren(of node: SplitScreenTreeNode) -> Int {
+            guard node.isContainerNode else { return 0 }
+            
+            return 2 + getNumberOfChildren(of: node.primaryChild!) + getNumberOfChildren(of: node.secondaryChild!)
+        }
+        
+        guard let neededRootNode = rootNodes[section] else { return nil }
+        
+        return 1 + getNumberOfChildren(of: neededRootNode)
+    }
     
     func node(with indexPath: IndexPath) {}
     
@@ -29,7 +43,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return numberOfItems(inSection: section)
+        return numberOfItems(inSection: section)!
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -37,7 +51,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EndScreenView",
                                                       for: indexPath) as! EndScreenView
 //        cell.indexPath = indexPath
-        delegate?.willDisplayCell(cell)
+        delegate?.willDisplayCell(cell, at: indexPath)
         
         return cell
     }

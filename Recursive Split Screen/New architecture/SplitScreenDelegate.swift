@@ -9,6 +9,6 @@
 import UIKit
 
 protocol SplitScreenDelegate {
-    func willDisplayCell(_ cell: UICollectionViewCell)
+    func willDisplayCell(_ cell: UICollectionViewCell, at indexPath: IndexPath)
     func willDisplaySeparatorView(_ separatorView: UICollectionReusableView)
 }
