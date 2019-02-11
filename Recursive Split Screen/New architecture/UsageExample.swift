@@ -35,6 +35,6 @@ extension UserViewController: SplitScreenDelegate {
     }
     
     func willDisplaySeparatorView(_ separatorView: UICollectionReusableView) {
-        separatorView.backgroundColor = .cyan
+        separatorView.backgroundColor = #colorLiteral(red: 0.1362412216, green: 0.1475113479, blue: 0.1638840419, alpha: 1)
     }
 }

@@ -6,11 +6,11 @@
 //  Copyright © 2019 Valeriy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class SepartorEditingManager {
     private(set) var isEditing = false
-    private var separatorBeingEdited: Separator?
+    var separatorBeingEdited: Separator?
     
     func startEditing(_ separator: Separator) {
         isEditing = true
@@ -21,4 +21,9 @@ class SepartorEditingManager {
         isEditing = false
         separatorBeingEdited = nil
     }
+    
+//    func setSeparatorProportion(to newProportion: CGFloat) {
+//        guard isEditing else { return }
+//        separatorBeingEdited!.proportion = newProportion
+//    }
 }

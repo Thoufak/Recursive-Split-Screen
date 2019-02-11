@@ -26,7 +26,7 @@ class SplitScreenView: UICollectionView {
                  forSupplementaryViewOfKind: "Separator",
                  withReuseIdentifier: "Separator")
         
-        // FIXME:
+        // FIXME: Should be getting allowedSpace from collectionView's frame
         dataManager = SplitScreenDataManager(allowedSpace: UIApplication.shared.windows[0].bounds,
                                              collectionView: self)
         delegate = dataManager

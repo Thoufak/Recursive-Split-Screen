@@ -100,6 +100,22 @@ extension SplitScreenDataManager: LayoutUpdater {
     func updateLayout() {
         collectionView.collectionViewLayout.invalidateLayout()
     }
+    
+    func reloadData() {
+        collectionView.reloadData()
+    }
+}
+
+// MARK: ViewSplitter
+
+extension SplitScreenDataManager {
+    func splitEndNode(atIndexPath indexPath: IndexPath, withSeparator separator: Separator) {
+        guard let neededNode = node(with: indexPath) else { return }
+        guard neededNode.isEndScreen else { return }
+        
+        neededNode.split(bySeparator: separator)
+        collectionView.reloadData()
+    }
 }
 
 
@@ -120,8 +136,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EndScreenView",
-                                                      for: indexPath) as! EndScreenView
-//        cell.indexPath = indexPath
+                                                      for: indexPath)
         splitScreenDelegate?.willDisplayCell(cell, at: indexPath)
         
         return cell
@@ -133,7 +148,6 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
         let separatorView = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
                                                                             withReuseIdentifier: "Separator",
                                                                             for: indexPath)
-        
         splitScreenDelegate?.willDisplaySeparatorView(separatorView)
         
         return separatorView
@@ -143,56 +157,82 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
 // MARK: Handling gestures
 
 extension SplitScreenDataManager {
+    // Separator editing (start)
     @objc func didLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
         let location = gestureRecognizer.location(in: collectionView)
         
         switch gestureRecognizer.state {
             case .began:
-                if let containerIndexPath = collectionView
+                print("didLongPress began")
+                guard let containerIndexPath = collectionView
                     .indexPathForSupplementaryView(ofKind: "Separator",
-                                                   at: location) {
-                    guard let containerForEditing = node(with: containerIndexPath) else { return }
-                    guard let separatorForEditing = containerForEditing.separator else { return }
-                    separatorForEditing.proportion = 0.1
-                    updateLayout()
-                    
-                }
+                                                   at: location)
+                    else { print(1) ; return }
+                guard let containerForEditing = node(with: containerIndexPath) else { print(2) ; return }
+                guard let separatorForEditing = containerForEditing.separator else { print(3) ; return }
+                print("4 (success)")
+                separtorEditingManager.startEditing(separatorForEditing)
+//                updateLayout()
+            
+            case .cancelled, .failed, .ended:
+                print("didLongPress .cancelled, .failed, .ended")
+                separtorEditingManager.stopEditing()
             
             default:
                 break
         }
     }
     
+    // Separator insertion
     @objc func didLongPressWIthTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
         let location = gestureRecognizer.location(in: collectionView)
         
         switch gestureRecognizer.state {
             case .began:
-                guard let EndViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
+                print("didLongPressWIthTwoTouches began")
+                guard let endViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
                     let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
                     let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)
                 
-                    // Guard: touches are within the same EndView
-                    guard collectionView.indexPathForItem(at: touch1location) ==
-                        collectionView.indexPathForItem(at: touch2location)
-                        else { return }
+                // Guard: touches are within the same EndView
+                guard collectionView.indexPathForItem(at: touch1location) ==
+                    collectionView.indexPathForItem(at: touch2location)
+                    else { return }
+                
+                print("didLongPressWIthTwoTouches are within the same EndView")
+        
+                let orientation = SeparatorOrientation.getOrientationByLocationsOfTouches(touch1location,
+                                                                                          touch2location)
+                let separator = Separator(proportion: 0, orientation: orientation)
+                // FIXME:
+                separator.proportion = separator.getProportion(forTouchLocation: location,
+                                                               inSuperViewOfSize: collectionView.bounds.size)
+                separtorEditingManager.startEditing(separator)
+                splitEndNode(atIndexPath: endViewIndexPath, withSeparator: separator)
+                reloadData()
             
-            
+            case .cancelled, .failed, .ended:
+                print("didLongPressWithTwoTouches .cancelled, .failed, .ended")
+                separtorEditingManager.stopEditing()
             
             default:
                 break
         }
     }
     
+    // Separator editing
     @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
+        let location = gestureRecognizer.location(in: collectionView)
+        
         switch gestureRecognizer.state {
             case .began, .changed:
-            print()
-//                guard let containerViewIndexPath =
-//                node(with: <#T##IndexPath#>)?.separator
-//                separator.proportion = separator.getProportion(forTouchLocation: gesture.translation(in: self),
-//                                                               inSuperViewOfSize: CGSize(width: 150, height: 150))
-//                layoutUpdater.updateLayout()
+                print("didPan .began, .changed")
+                guard separtorEditingManager.isEditing else { return }
+                let newProportion = separtorEditingManager.separatorBeingEdited!
+                    .getProportion(forTouchLocation: location,
+                                   inSuperViewOfSize: collectionView.bounds.size)
+                separtorEditingManager.separatorBeingEdited!.proportion = newProportion
+                updateLayout()
             
             default:
                 break
@@ -201,5 +241,9 @@ extension SplitScreenDataManager {
 }
 
 extension SplitScreenDataManager: UIGestureRecognizerDelegate {
-
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // FIXME:
+        return true
+    }
 }
