@@ -23,9 +23,6 @@ class SplitScreenDataManager: NSObject {
         
         addRootNode()
         addGestureRecognizers()
-        
-        rootNodes[0]?.split(bySeparator: Separator(proportion: 0.25,
-                                                   orientation: .horizontal))
     }
     
     func addGestureRecognizers() {
@@ -112,6 +109,13 @@ class SplitScreenDataManager: NSObject {
 
         return unionFramesOfChildren(ofContainerNodeAt: indexPath)
     }
+    
+    func frameOfEndNode(with indexPath: IndexPath) -> CGRect? {
+        guard let neededNode = node(with: indexPath) else { return nil }
+        guard neededNode.isEndScreen else { return nil }
+        
+        return collectionView.layoutAttributesForItem(at: indexPath)!.frame
+    }
 }
 
 // MARK: LayoutAttributesManager
@@ -162,13 +166,11 @@ extension SplitScreenDataManager {
 
 extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("sections: \(rootNodes.count)")
         return rootNodes.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        print("items: \(numberOfItems(inSection: section))")
         return numberOfItems(inSection: section)!
     }
     
@@ -210,7 +212,6 @@ extension SplitScreenDataManager {
                 guard let separatorForEditing = containerForEditing.separator else { return }
                 separtorEditingManager.startEditing(separatorForEditing,
                                                     parentBounds: frameOfContainerNode(with: containerIndexPath)!)
-//                updateLayout()
             
             case .cancelled, .failed, .ended:
                 separtorEditingManager.stopEditing()
@@ -227,8 +228,8 @@ extension SplitScreenDataManager {
         switch gestureRecognizer.state {
             case .began:
                 guard let endViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
-                    let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
-                    let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)
+                let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
+                let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)
                 
                 // Guard: touches are within the same EndView
                 guard collectionView.indexPathForItem(at: touch1location) ==
@@ -238,12 +239,12 @@ extension SplitScreenDataManager {
                 let orientation = SeparatorOrientation.getOrientationByLocationsOfTouches(touch1location,
                                                                                           touch2location)
                 let separator = Separator(proportion: 0, orientation: orientation)
-                
-                splitEndNode(atIndexPath: endViewIndexPath, withSeparator: separator)
-                let containerIndexPath = IndexPath(item: endViewIndexPath.row + 1,
-                                                   section: endViewIndexPath.section)
+//                let containerIndexPath = IndexPath(item: endViewIndexPath.item + 1,
+//                                                   section: endViewIndexPath.section)
                 separtorEditingManager.startEditing(separator,
-                                                    parentBounds: frameOfContainerNode(with: containerIndexPath)!)
+                                                    parentBounds: frameOfEndNode(with: endViewIndexPath)!)
+                splitEndNode(atIndexPath: endViewIndexPath, withSeparator: separator)
+                
                 separator.proportion = separator.getProportion(forTouchLocation: location ,
                                                                inSuperViewWithFrame: separtorEditingManager.parentBounds!)
                 reloadData()

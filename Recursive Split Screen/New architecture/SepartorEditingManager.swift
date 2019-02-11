@@ -23,13 +23,4 @@ class SepartorEditingManager {
         isEditing = false
         separatorBeingEdited = nil
     }
-    
-    func isInParentBounds(_ point: CGPoint) {
-        
-    }
-    
-//    func setSeparatorProportion(to newProportion: CGFloat) {
-//        guard isEditing else { return }
-//        separatorBeingEdited!.proportion = newProportion
-//    }
 }
