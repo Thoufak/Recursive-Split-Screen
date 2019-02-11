@@ -41,9 +41,9 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
         return layoutAttributesCache[indexPath.row]
     }
     
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return collectionView?.bounds.size != newBounds.size
-    }
+//    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+//        return collectionView?.bounds.size != newBounds.size
+//    }
     
     // MARK:
     

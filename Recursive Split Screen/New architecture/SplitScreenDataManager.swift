@@ -40,6 +40,12 @@ class SplitScreenDataManager: NSObject {
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self,
                                                           action: #selector(didPan))
+        
+        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(didTrippleTap))
+        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
+        collectionView.addGestureRecognizer(trippleTapGestureRecognizer)
+        
         panGestureRecognizer.delegate = self
         collectionView.addGestureRecognizer(panGestureRecognizer)
     }
@@ -83,6 +89,28 @@ class SplitScreenDataManager: NSObject {
         }
         
         return nil
+    }
+    
+    func frameOfContainerNode(with indexPath: IndexPath) -> CGRect? {
+        func unionFramesOfChildren(ofContainerNodeAt indexPath: IndexPath) -> CGRect? {
+            guard let neededNode = node(with: indexPath) else { return nil }
+            guard neededNode.isContainerNode else { return nil }
+            
+            let primaryChildNodeIndexPath = neededNode.primaryChild!.indexPath!
+            let secondaryChildNodeIndexPath = neededNode.secondaryChild!.indexPath!
+            
+            let primaryChildFrame = node(with: primaryChildNodeIndexPath)!.isEndScreen ?
+                                    collectionView.layoutAttributesForItem(at: primaryChildNodeIndexPath)!.frame :
+                                    unionFramesOfChildren(ofContainerNodeAt: primaryChildNodeIndexPath)
+            
+            let secondaryChildFrame = node(with: secondaryChildNodeIndexPath)!.isEndScreen ?
+                                      collectionView.layoutAttributesForItem(at: secondaryChildNodeIndexPath)!.frame :
+                                      unionFramesOfChildren(ofContainerNodeAt: secondaryChildNodeIndexPath)
+            
+            return primaryChildFrame!.union(secondaryChildFrame!)
+        }
+
+        return unionFramesOfChildren(ofContainerNodeAt: indexPath)
     }
 }
 
@@ -163,19 +191,17 @@ extension SplitScreenDataManager {
         
         switch gestureRecognizer.state {
             case .began:
-                print("didLongPress began")
                 guard let containerIndexPath = collectionView
                     .indexPathForSupplementaryView(ofKind: "Separator",
                                                    at: location)
-                    else { print(1) ; return }
-                guard let containerForEditing = node(with: containerIndexPath) else { print(2) ; return }
-                guard let separatorForEditing = containerForEditing.separator else { print(3) ; return }
-                print("4 (success)")
-                separtorEditingManager.startEditing(separatorForEditing)
+                    else { return }
+                guard let containerForEditing = node(with: containerIndexPath) else { return }
+                guard let separatorForEditing = containerForEditing.separator else { return }
+                separtorEditingManager.startEditing(separatorForEditing,
+                                                    parentBounds: frameOfContainerNode(with: containerIndexPath)!)
 //                updateLayout()
             
             case .cancelled, .failed, .ended:
-                print("didLongPress .cancelled, .failed, .ended")
                 separtorEditingManager.stopEditing()
             
             default:
@@ -189,7 +215,6 @@ extension SplitScreenDataManager {
         
         switch gestureRecognizer.state {
             case .began:
-                print("didLongPressWIthTwoTouches began")
                 guard let endViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
                     let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
                     let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)
@@ -198,21 +223,21 @@ extension SplitScreenDataManager {
                 guard collectionView.indexPathForItem(at: touch1location) ==
                     collectionView.indexPathForItem(at: touch2location)
                     else { return }
-                
-                print("didLongPressWIthTwoTouches are within the same EndView")
         
                 let orientation = SeparatorOrientation.getOrientationByLocationsOfTouches(touch1location,
                                                                                           touch2location)
                 let separator = Separator(proportion: 0, orientation: orientation)
-                // FIXME:
-                separator.proportion = separator.getProportion(forTouchLocation: location,
-                                                               inSuperViewOfSize: collectionView.bounds.size)
-                separtorEditingManager.startEditing(separator)
+                
                 splitEndNode(atIndexPath: endViewIndexPath, withSeparator: separator)
+                let containerIndexPath = IndexPath(item: endViewIndexPath.row + 1,
+                                                   section: endViewIndexPath.section)
+                separtorEditingManager.startEditing(separator,
+                                                    parentBounds: frameOfContainerNode(with: containerIndexPath)!)
+                separator.proportion = separator.getProportion(forTouchLocation: location ,
+                                                               inSuperViewWithFrame: separtorEditingManager.parentBounds!)
                 reloadData()
             
             case .cancelled, .failed, .ended:
-                print("didLongPressWithTwoTouches .cancelled, .failed, .ended")
                 separtorEditingManager.stopEditing()
             
             default:
@@ -226,17 +251,21 @@ extension SplitScreenDataManager {
         
         switch gestureRecognizer.state {
             case .began, .changed:
-                print("didPan .began, .changed")
                 guard separtorEditingManager.isEditing else { return }
                 let newProportion = separtorEditingManager.separatorBeingEdited!
                     .getProportion(forTouchLocation: location,
-                                   inSuperViewOfSize: collectionView.bounds.size)
+                                   inSuperViewWithFrame: separtorEditingManager.parentBounds!)
                 separtorEditingManager.separatorBeingEdited!.proportion = newProportion
                 updateLayout()
             
             default:
                 break
         }
+    }
+    
+    @objc func didTrippleTap() {
+        addRootNode()
+        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
     }
 }
 

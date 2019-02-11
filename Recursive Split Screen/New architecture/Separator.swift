@@ -72,10 +72,13 @@ class Separator {
     }
     
     func getProportion(forTouchLocation touchLocation: CGPoint,
-                       inSuperViewOfSize superViewSize: CGSize) -> CGFloat {
+                       inSuperViewWithFrame superViewFrame: CGRect) -> CGFloat {
+        let relativeCoord = orientation == .vertical ?
+                            touchLocation.x - superViewFrame.minX :
+                            touchLocation.y - superViewFrame.minY
         return orientation == .vertical ?
-            touchLocation.x / superViewSize.width :
-            touchLocation.y / superViewSize.height
+               relativeCoord / superViewFrame.width :
+               relativeCoord / superViewFrame.height
     }
     
     func getLayoutAttributes(withAllowedSpace allowedSpace: CGRect,
