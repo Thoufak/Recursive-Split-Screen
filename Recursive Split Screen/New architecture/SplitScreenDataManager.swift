@@ -113,15 +113,24 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
 // MARK: Handling gestures
 
 extension SplitScreenDataManager {
-    func didLongPressWithTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
+    @objc func didLongPressWithTwoTouches(gestureRecognizer: UILongPressGestureRecognizer) {
         
     }
     
-    func didPan(gestureRecognizer: UIPanGestureRecognizer) {
-        
+    @objc func didPan(gestureRecognizer: UIPanGestureRecognizer) {
+        switch gestureRecognizer.state {
+            case .began, .changed:
+                node(with: <#T##IndexPath#>)
+                separator.proportion = separator.getProportion(forTouchLocation: gesture.translation(in: self),
+                                                               inSuperViewOfSize: CGSize(width: 150, height: 150))
+                layoutUpdater.updateLayout()
+            
+            default:
+                break
+        }
     }
 }
 
 extension SplitScreenDataManager: UIGestureRecognizerDelegate {
-    
+
 }
