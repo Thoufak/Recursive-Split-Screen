@@ -9,6 +9,8 @@
 import UIKit
 
 class SplitScreenDataManager: NSObject {
+    var delegate: SplitScreenDelegate?
+    
     private var rootNodes = [Int:SplitScreenTreeNode]()
     
     func addRootNode() {}
@@ -33,13 +35,22 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EndScreenView",
-                                                      for: indexPath)
-        cell
+                                                      for: indexPath) as! EndScreenView
+//        cell.indexPath = indexPath
+        delegate?.willDisplayCell(cell)
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        <#code#>
+        let separatorView = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
+                                                                            withReuseIdentifier: "Separator",
+                                                                            for: indexPath)
+        
+        delegate?.willDisplaySeparatorView(separatorView)
+        
+        return separatorView
     }
 }
