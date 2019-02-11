@@ -232,7 +232,10 @@ extension SplitScreenDataManager {
             case .began:
                 guard let endViewIndexPath = collectionView.indexPathForItem(at: location) else { return }
                 // Guard: the node can split
-                guard node(with: endViewIndexPath)?.canSplit ?? false else { return }
+                guard node(with: endViewIndexPath)?.canSplit ?? false else {
+                    print("Maximum recursion level has been reached.")
+                    return
+                }
                 
                 let touch1location = gestureRecognizer.location(ofTouch: 0, in: collectionView)
                 let touch2location = gestureRecognizer.location(ofTouch: 1, in: collectionView)

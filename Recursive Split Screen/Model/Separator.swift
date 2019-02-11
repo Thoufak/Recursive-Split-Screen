@@ -44,7 +44,7 @@ class Separator {
     let orientation: SeparatorOrientation
     private var thickness: CGFloat
     
-    static let standardThickness: CGFloat = 32.0
+    static let standardThickness: CGFloat = 24.0
     
     init(proportion: CGFloat,
          orientation: SeparatorOrientation,
