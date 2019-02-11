@@ -23,12 +23,14 @@ extension UserViewController: SplitScreenDelegate {
         let myColors: [UIColor] = [
             #colorLiteral(red: 0.6117647059, green: 0.8549019608, blue: 0.2509803922, alpha: 1),
             #colorLiteral(red: 0, green: 0.6117647059, blue: 0.6745098039, alpha: 1),
-            #colorLiteral(red: 0.9960784314, green: 0.8039215686, blue: 0, alpha: 1),
+            #colorLiteral(red: 0.9960784314, green: 0.8392454015, blue: 0, alpha: 1),
             #colorLiteral(red: 1, green: 0.2745098039, blue: 0.1607843137, alpha: 1),
             #colorLiteral(red: 0.5843137255, green: 0.8980392157, blue: 0.7176470588, alpha: 1),
             #colorLiteral(red: 0.450756164, green: 0.2916669688, blue: 0.5148120241, alpha: 1),
             #colorLiteral(red: 0.9361913071, green: 0.5840523553, blue: 0, alpha: 1),
             #colorLiteral(red: 0.05882352941, green: 0.231372549, blue: 0.3647058824, alpha: 1),
+            #colorLiteral(red: 0.3058228336, green: 0.3871893684, blue: 0.7911445114, alpha: 1),
+            #colorLiteral(red: 0.7359612944, green: 0.4112909787, blue: 0.6501689086, alpha: 1),
         ]
         
         cell.backgroundColor = myColors[indexPath.item / 2 % myColors.count]
