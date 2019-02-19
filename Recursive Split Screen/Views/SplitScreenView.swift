@@ -32,6 +32,8 @@ class SplitScreenView: UICollectionView {
         delegate = dataManager
         dataSource = dataManager
         layout.layoutAttributesManager = dataManager
+        
+        isScrollEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {

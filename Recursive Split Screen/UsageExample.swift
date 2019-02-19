@@ -33,7 +33,7 @@ extension UserViewController: SplitScreenDelegate {
             #colorLiteral(red: 0.7359612944, green: 0.4112909787, blue: 0.6501689086, alpha: 1),
         ]
         
-        cell.backgroundColor = myColors[indexPath.item / 2 % myColors.count]
+        cell.backgroundColor = myColors[(indexPath.item / 2 + indexPath.section) % myColors.count]
     }
     
     func willDisplaySeparatorView(_ separatorView: UICollectionReusableView) {

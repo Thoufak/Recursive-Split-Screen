@@ -10,4 +10,5 @@ import UIKit
 
 protocol LayoutAttributesManager {
     func layoutAttributes() -> [UICollectionViewLayoutAttributes]
+    func contentSize() -> CGSize
 }

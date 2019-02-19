@@ -12,6 +12,10 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
     var layoutAttributesCache = [UICollectionViewLayoutAttributes]()
     var layoutAttributesManager: LayoutAttributesManager!
     
+    private func calculateLayoutAttributes() {
+        layoutAttributesCache = layoutAttributesManager.layoutAttributes()
+    }
+    
     // MARK: Overrides
     
     override func prepare() {
@@ -22,7 +26,7 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
     }
     
     override var collectionViewContentSize: CGSize {
-        return UIApplication.shared.windows[0].bounds.size
+        return layoutAttributesManager.contentSize()
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -39,9 +43,5 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return layoutAttributesCache[indexPath.item]
-    }
-    
-    private func calculateLayoutAttributes() {
-        layoutAttributesCache = layoutAttributesManager.layoutAttributes()
     }
 }

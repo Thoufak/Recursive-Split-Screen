@@ -22,6 +22,10 @@ class SplitScreenDataManager: NSObject {
         super.init()
         
         addRootNode()
+        addRootNode()
+        addRootNode()
+        addRootNode()
+        addRootNode()
         addGestureRecognizers()
     }
     
@@ -30,21 +34,22 @@ class SplitScreenDataManager: NSObject {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
                                                                       action: #selector(didLongPress))
         collectionView.addGestureRecognizer(longPressGestureRecognizer)
-        
+
         // Splitting
         let longPressWithTwoTouchesGestureRecognizer = UILongPressGestureRecognizer(target: self,
                                                                                     action: #selector(didLongPressWIthTwoTouches))
         longPressWithTwoTouchesGestureRecognizer.numberOfTouchesRequired = 2
         collectionView.addGestureRecognizer(longPressWithTwoTouchesGestureRecognizer)
+
+        // TODO: multiscreen feature
+        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(didTrippleTap))
+        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
+        collectionView.addGestureRecognizer(trippleTapGestureRecognizer)
         
+        // Pan
         let panGestureRecognizer = UIPanGestureRecognizer(target: self,
                                                           action: #selector(didPan))
-// TODO: multiscreen feature
-//        let trippleTapGestureRecognizer = UITapGestureRecognizer(target: self,
-//                                                                 action: #selector(didTrippleTap))
-//        trippleTapGestureRecognizer.numberOfTouchesRequired = 3
-//        collectionView.addGestureRecognizer(trippleTapGestureRecognizer)
-        
         panGestureRecognizer.delegate = self
         collectionView.addGestureRecognizer(panGestureRecognizer)
     }
@@ -123,20 +128,20 @@ class SplitScreenDataManager: NSObject {
 // MARK: LayoutAttributesManager
 
 extension SplitScreenDataManager: LayoutAttributesManager {
+    func contentSize() -> CGSize {
+        return CGSize(width: allowedSpace.width, height: allowedSpace.height * CGFloat(rootNodes.count))
+    }
+    
     func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
-        // TODO: multiscreen feature
-        //        var attributes = [UICollectionViewLayoutAttributes]()
-        //
-        //        for (sectionindex, rootNode) in rootNodes {
-        //            let y = CGFloat(sectionindex) * allowedSpace.height
-        //            let sectionAllowedSpace = allowedSpace
-        //            sectionAllowedSpace.offsetBy(dx: 0, dy: y)
-        //            attributes.append(contentsOf: rootNode.getLayoutAttributes(withAllowedSpace: allowedSpace).compactMap { $0 })
-        //        }
-        //
-        //        return attributes
-        
-        return rootNodes.values.flatMap { $0.getLayoutAttributes(withAllowedSpace: allowedSpace) }
+        var attributes = [UICollectionViewLayoutAttributes]()
+
+        for (sectionindex, rootNode) in rootNodes {
+            let y = CGFloat(sectionindex) * allowedSpace.height
+            let sectionAllowedSpace = allowedSpace.offsetBy(dx: 0, dy: y)
+            attributes.append(contentsOf: rootNode.getLayoutAttributes(withAllowedSpace: sectionAllowedSpace).compactMap { $0 })
+        }
+
+        return attributes
     }
 }
 
@@ -192,6 +197,7 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
         let separatorView = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
                                                                             withReuseIdentifier: "Separator",
                                                                             for: indexPath)
+        separatorView.superview?.bringSubviewToFront(separatorView)
         splitScreenDelegate?.willDisplaySeparatorView(separatorView)
         
         return separatorView
@@ -281,16 +287,18 @@ extension SplitScreenDataManager {
                 break
         }
     }
-// TODO: multiscreen feature
-//    @objc func didTrippleTap() {
-//        addRootNode()
-//        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
-//    }
+
+    @objc func didTrippleTap() {
+        addRootNode()
+        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
+    }
 }
 
 extension SplitScreenDataManager: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        print("gestureRecognizer: \(gestureRecognizer)")
+        print("otherGestureRecognizer: \(otherGestureRecognizer)")
         return true
     }
 }

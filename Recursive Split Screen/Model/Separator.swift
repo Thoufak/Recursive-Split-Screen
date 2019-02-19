@@ -42,7 +42,7 @@ class Separator {
     /// Indicates the primaryView's proportion (the secondaryView takes the rest of space)
     var proportion: CGFloat
     let orientation: SeparatorOrientation
-    private var thickness: CGFloat
+    private(set) var thickness: CGFloat
     
     static let standardThickness: CGFloat = 24.0
     
