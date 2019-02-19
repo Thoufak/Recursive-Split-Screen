@@ -22,10 +22,6 @@ class SplitScreenDataManager: NSObject {
         super.init()
         
         addRootNode()
-        addRootNode()
-        addRootNode()
-        addRootNode()
-        addRootNode()
         addGestureRecognizers()
     }
     
@@ -128,15 +124,17 @@ class SplitScreenDataManager: NSObject {
 // MARK: LayoutAttributesManager
 
 extension SplitScreenDataManager: LayoutAttributesManager {
+    var sectionBorderThickness: CGFloat { return 48 }
+    
     func contentSize() -> CGSize {
-        return CGSize(width: allowedSpace.width, height: allowedSpace.height * CGFloat(rootNodes.count))
+        return CGSize(width: allowedSpace.width, height:  CGFloat(rootNodes.count) * (allowedSpace.height + sectionBorderThickness))
     }
     
     func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
         var attributes = [UICollectionViewLayoutAttributes]()
 
         for (sectionindex, rootNode) in rootNodes {
-            let y = CGFloat(sectionindex) * allowedSpace.height
+            let y = CGFloat(sectionindex) * (allowedSpace.height + sectionBorderThickness)
             let sectionAllowedSpace = allowedSpace.offsetBy(dx: 0, dy: y)
             attributes.append(contentsOf: rootNode.getLayoutAttributes(withAllowedSpace: sectionAllowedSpace).compactMap { $0 })
         }
@@ -290,7 +288,9 @@ extension SplitScreenDataManager {
 
     @objc func didTrippleTap() {
         addRootNode()
-        collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
+        UIView.performWithoutAnimation {
+            collectionView.insertSections(IndexSet(arrayLiteral: rootNodes.count - 1))
+        }
     }
 }
 
