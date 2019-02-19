@@ -127,7 +127,10 @@ extension SplitScreenDataManager: LayoutAttributesManager {
     var sectionBorderThickness: CGFloat { return 48 }
     
     func contentSize() -> CGSize {
-        return CGSize(width: allowedSpace.width, height:  CGFloat(rootNodes.count) * (allowedSpace.height + sectionBorderThickness))
+        let sectionsTotalHeight = CGFloat(rootNodes.count) * allowedSpace.height
+        let bordersTotalHeight = (CGFloat(rootNodes.count) - 1) * sectionBorderThickness
+        
+        return CGSize(width: allowedSpace.width, height:  sectionsTotalHeight + bordersTotalHeight)
     }
     
     func layoutAttributes() -> [UICollectionViewLayoutAttributes] {
