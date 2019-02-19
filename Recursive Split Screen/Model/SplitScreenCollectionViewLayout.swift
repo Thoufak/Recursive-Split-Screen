@@ -29,6 +29,10 @@ class SplitScreenCollectionViewLayout: UICollectionViewLayout {
         return layoutAttributesManager.contentSize()
     }
     
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         

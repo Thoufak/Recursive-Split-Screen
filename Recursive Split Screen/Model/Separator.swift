@@ -86,6 +86,7 @@ class Separator {
         let sepAttrs = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "Separator",
                                                         with: indexPath)
         sepAttrs.frame = getFrame(forSuperViewFrame: allowedSpace)
+        sepAttrs.zIndex = Int.max
         
         return sepAttrs
     }

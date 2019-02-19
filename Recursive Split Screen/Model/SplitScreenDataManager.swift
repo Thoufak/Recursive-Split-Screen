@@ -198,7 +198,6 @@ extension SplitScreenDataManager: UICollectionViewDataSource, UICollectionViewDe
         let separatorView = collectionView.dequeueReusableSupplementaryView(ofKind: "Separator",
                                                                             withReuseIdentifier: "Separator",
                                                                             for: indexPath)
-        separatorView.superview?.bringSubviewToFront(separatorView)
         splitScreenDelegate?.willDisplaySeparatorView(separatorView)
         
         return separatorView

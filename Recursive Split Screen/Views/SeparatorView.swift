@@ -8,8 +8,4 @@
 
 import UIKit
 
-class SeparatorView: UICollectionReusableView {
-    override func prepareForReuse() {
-        
-    }
-}
+class SeparatorView: UICollectionReusableView {}
